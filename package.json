@@ -18,8 +18,7 @@
   },
   "license": "MIT",
   "files": [
-    "app",
-    "app/templates/test"
+    "app"
   ],
   "type": "module",
   "engines": {
@@ -37,7 +36,10 @@
   },
   "prettier": "@tomer/prettier-config",
   "eslintConfig": {
-    "extends": "@tomer"
+    "extends": "@tomer",
+    "rules": {
+      "compat/compat": "off"
+    }
   },
   "lint-staged": {
     "*.js": [

@@ -95,6 +95,12 @@ Object.assign(JsGenerator.prototype, {
         null,
         { globOptions: { dot: true } }
       )
+
+      const mv = (from, to) =>
+        this.fs.move(this.destinationPath(from), this.destinationPath(to))
+      mv(`gitignore`, `.gitignore`)
+      mv(`npmrc`, `.npmrc`)
+      mv(`_package.json`, `package.json`)
     },
     async license() {
       this.writeDestination(
