@@ -1,0 +1,60 @@
+{
+  "name": "<%= moduleName %>",
+  "version": "0.0.0",
+  "author": {
+    "name": "<%= name %>",
+    "email": "<%= email %>",
+    "url": "<%= website %>"
+  },
+  "description": "<%= moduleDescription %>",
+  "keywords": [],
+  "homepage": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>",
+  "repository": "<%= githubUsername %>/<%= unscopedModuleName %>",
+  "bugs": {
+    "url": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/issues"
+  },
+  "license": "<%= licenseIdentifier %>",
+  "files": [
+    "src"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">= 12"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not op_mini all"
+  ],
+  "exports": "./src/index.js",
+  "module": "./src/index.js",
+  "scripts": {
+    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
+    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
+    "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
+    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
+    "lint": "run-s lint:*",
+    "test": "ava",
+    "coverage": "c8 run-s test"
+  },
+  "prettier": "@tomer/prettier-config",
+  "eslintConfig": {
+    "extends": "@tomer"
+  },
+  "lint-staged": {
+    "*.js": [
+      "run-s \"lint:prettier:base -- --write {@}\" --",
+      "run-s \"lint:eslint:base -- --fix {@}\" --"
+    ],
+    "*.{json,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
+  },
+  "commitlint": {
+    "extends": "@commitlint/config-conventional"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

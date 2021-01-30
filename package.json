@@ -1,0 +1,91 @@
+{
+  "name": "@tomer/generator-js",
+  "version": "0.0.0",
+  "author": {
+    "name": "Tomer Aberbach",
+    "email": "tomeraberbach@gmail.com",
+    "url": "https://tomeraberba.ch"
+  },
+  "description": "A Yeoman generator for scaffolding my JavaScript modules.",
+  "keywords": [
+    "node-module",
+    "yeoman-generator"
+  ],
+  "homepage": "https://github.com/TomerAberbach/generator-js",
+  "repository": "TomerAberbach/generator-js",
+  "bugs": {
+    "url": "https://github.com/TomerAberbach/generator-js/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "app"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">= 12"
+  },
+  "scripts": {
+    "lint:prettier:base": "prettier --loglevel silent --ignore-path .eslintignore",
+    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
+    "lint:eslint:base": "eslint --cache --ext js --ignore-path .eslintignore",
+    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
+    "lint": "run-s lint:*",
+    "test": "ava",
+    "coverage": "c8 run-s test",
+    "clean": "rimraf temp"
+  },
+  "prettier": "@tomer/prettier-config",
+  "eslintConfig": {
+    "extends": "@tomer"
+  },
+  "lint-staged": {
+    "*.js": [
+      "run-s \"lint:prettier:base -- --write {@}\" --",
+      "run-s \"lint:eslint:base -- --fix {@}\" --"
+    ],
+    "*.{json,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
+  },
+  "ava": {
+    "files": [
+      "!./app/templates/**/*"
+    ],
+    "failWithoutAssertions": false
+  },
+  "commitlint": {
+    "extends": "@commitlint/config-conventional"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "dependencies": {
+    "@sindresorhus/slugify": "1.1.0",
+    "camelcase": "6.2.0",
+    "got": "11.8.1",
+    "is-scoped": "2.1.0",
+    "normalize-url": "5.3.0",
+    "superb": "4.0.0",
+    "yeoman-generator": "4.12.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "@tomer/eslint-config": "0.0.18",
+    "@tomer/prettier-config": "0.0.2",
+    "ava": "3.15.0",
+    "ava-fast-check": "4.0.1",
+    "c8": "7.4.0",
+    "eslint": "7.18.0",
+    "fast-check": "2.12.0",
+    "husky": "4.3.8",
+    "lint-staged": "10.5.3",
+    "npm-run-all": "4.1.5",
+    "pify": "5.0.0",
+    "prettier": "2.2.1",
+    "rimraf": "3.0.2",
+    "yeoman-assert": "3.1.1",
+    "yeoman-test": "4.0.0"
+  }
+}
