@@ -18,7 +18,8 @@
   },
   "license": "MIT",
   "files": [
-    "app"
+    "app",
+    "app/templates/test"
   ],
   "type": "module",
   "engines": {
