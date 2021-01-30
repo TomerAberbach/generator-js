@@ -12,7 +12,7 @@ $ npm i -g yo @tomer/generator-js
 
 With [yo](https://github.com/yeoman/yo):
 
-```
+```sh
 $ yo @tomer/js
 ```
 
