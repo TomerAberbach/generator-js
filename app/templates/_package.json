@@ -46,7 +46,7 @@
       "run-s \"lint:prettier:base -- --write {@}\" --",
       "run-s \"lint:eslint:base -- --fix {@}\" --"
     ],
-    "*.{json,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
+    "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
   },
   "commitlint": {
     "extends": "@commitlint/config-conventional"
