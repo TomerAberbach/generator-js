@@ -19,7 +19,7 @@
   ],
   "type": "module",
   "engines": {
-    "node": ">= 12"
+    "node": ">= 12.17"
   },
   "browserslist": [
     "defaults",
