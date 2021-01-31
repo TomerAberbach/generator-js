@@ -6,8 +6,8 @@
   <a href="https://npmjs.org/package/@tomer/generator-js">
     <img src="https://badgen.now.sh/npm/v/@tomer/generator-js" alt="version" />
   </a>
-  <a href="https://github.com/<%= githubUsername %>/generator-js/actions">
-    <img src="https://github.com/<%= githubUsername %>/generator-js/workflows/CI/badge.svg" alt="CI" />
+  <a href="https://github.com/TomerAberbach/generator-js/actions">
+    <img src="https://github.com/TomerAberbach/generator-js/workflows/CI/badge.svg" alt="CI" />
   </a>
   <a href="https://packagephobia.now.sh/result?p=@tomer/generator-js">
     <img src="https://packagephobia.now.sh/badge?p=@tomer/generator-js" alt="install size" />
