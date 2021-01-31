@@ -7,9 +7,11 @@ import assert from 'yeoman-assert'
 import del from 'del'
 
 const tempDirname = join(dirname(fileURLToPath(import.meta.url)), `temp`)
+const previousCwd = process.cwd()
 
 test.after(async () => {
-  await del(tempDirname, { force: true })
+  process.chdir(previousCwd)
+  await del(tempDirname)
 })
 
 let run
