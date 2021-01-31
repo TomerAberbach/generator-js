@@ -13,11 +13,17 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.nodejs }}
-      - uses: pnpm/action-setup@v1.2.1
-        with:
-          version: 4.11.1
-          run_install: true
-      - run: pnpm test
+
+      - name: Install pnpm
+        run: npx pnpm add -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test
+        run: pnpm test
