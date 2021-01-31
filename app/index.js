@@ -104,7 +104,7 @@ Object.assign(JsGenerator.prototype, {
       mv(`gitattributes`, `.gitattributes`)
       mv(`npmrc`, `.npmrc`)
       mv(`_package.json`, `package.json`)
-      mv(`github`, `.github`)
+      mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
     },
     async license() {
       this.writeDestination(

@@ -48,7 +48,7 @@ test.serial(`generates expected files`, async () => {
 
   assert.file([
     `.git`,
-    `.github`,
+    `.github/workflows/ci.yml`,
     `.gitignore`,
     `.npmrc`,
     `src/index.js`,
