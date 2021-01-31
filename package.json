@@ -9,6 +9,14 @@
   "description": "A Yeoman generator for scaffolding my JavaScript modules.",
   "keywords": [
     "node-module",
+    "pnpm",
+    "prettier",
+    "eslint",
+    "ava",
+    "c8",
+    "lint-staged",
+    "commitlint",
+    "husky",
     "yeoman-generator"
   ],
   "homepage": "https://github.com/TomerAberbach/generator-js",
