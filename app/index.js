@@ -101,6 +101,7 @@ Object.assign(JsGenerator.prototype, {
       const mv = (from, to) =>
         this.fs.move(this.destinationPath(from), this.destinationPath(to))
       mv(`gitignore`, `.gitignore`)
+      mv(`gitattributes`, `.gitattributes`)
       mv(`npmrc`, `.npmrc`)
       mv(`_package.json`, `package.json`)
       mv(`github`, `.github`)

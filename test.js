@@ -4,8 +4,13 @@ import test from 'ava'
 import pify from 'pify'
 import helpers from 'yeoman-test'
 import assert from 'yeoman-assert'
+import del from 'del'
 
 const tempDirname = join(dirname(fileURLToPath(import.meta.url)), `temp`)
+
+test.after(async () => {
+  await del(tempDirname, { force: true })
+})
 
 let run
 let mockPrompt

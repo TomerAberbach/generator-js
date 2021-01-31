@@ -40,7 +40,7 @@
     "lint": "run-s lint:*",
     "test": "ava",
     "coverage": "c8 run-s test",
-    "clean": "rimraf temp"
+    "clean": "del temp"
   },
   "prettier": "@tomer/prettier-config",
   "eslintConfig": {
@@ -88,6 +88,8 @@
     "ava": "3.15.0",
     "ava-fast-check": "4.0.1",
     "c8": "7.4.0",
+    "del": "6.0.0",
+    "del-cli": "3.0.1",
     "eslint": "7.18.0",
     "fast-check": "2.12.0",
     "husky": "4.3.8",
@@ -95,7 +97,6 @@
     "npm-run-all": "4.1.5",
     "pify": "5.0.0",
     "prettier": "2.2.1",
-    "rimraf": "3.0.2",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "4.0.0"
   }
