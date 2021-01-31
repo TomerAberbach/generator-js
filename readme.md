@@ -1,8 +1,29 @@
-# generator-js
+<h1 align="center">
+  generator-js
+</h1>
 
-> A Yeoman generator for scaffolding my JavaScript modules.
+<div align="center">
+  <a href="https://npmjs.org/package/@tomer/generator-js">
+    <img src="https://badgen.now.sh/npm/v/@tomer/generator-js" alt="version" />
+  </a>
+  <a href="https://github.com/<%= githubUsername %>/generator-js/actions">
+    <img src="https://github.com/<%= githubUsername %>/generator-js/workflows/CI/badge.svg" alt="CI" />
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=@tomer/generator-js">
+    <img src="https://packagephobia.now.sh/badge?p=@tomer/generator-js" alt="install size" />
+  </a>
+</div>
 
-Heavily inspired by [`generator-nm`](https://github.com/sindresorhus/generator-nm)!
+<div align="center">
+  A Yeoman generator for scaffolding my JavaScript modules.
+</div>
+
+## Features
+
+- **Unoriginal:** heavily inspired by [`generator-nm`](https://github.com/sindresorhus/generator-nm)!
+- **Opinionated:** probably won't work at all for your use case...
+- **Nosy:** interrogates you about your modules!
+- **Excessive:** needlessly included a pointless fourth "feature" :shrug:
 
 ## Install
 

@@ -1,4 +1,6 @@
-<h1 align="center"><%= unscopedModuleName %></h1>
+<h1 align="center">
+  <%= unscopedModuleName %>
+</h1>
 
 <div align="center">
   <a href="https://npmjs.org/package/<%= moduleName %>">
