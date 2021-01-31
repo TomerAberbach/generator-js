@@ -30,7 +30,7 @@
   ],
   "type": "module",
   "engines": {
-    "node": ">= 12"
+    "node": ">= 12.7"
   },
   "scripts": {
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .eslintignore",
