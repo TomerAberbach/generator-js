@@ -1,6 +1,26 @@
-# <%= unscopedModuleName %>
+<h1 align="center"><%= unscopedModuleName %></h1>
 
-> <%= moduleDescription %>
+<div align="center">
+  <a href="https://npmjs.org/package/<%= moduleName %>">
+    <img src="https://badgen.now.sh/npm/v/<%= moduleName %>" alt="version" />
+  </a>
+  <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
+    <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=<%= moduleName %>">
+    <img src="https://packagephobia.now.sh/badge?p=<%= moduleName %>" alt="install size" />
+  </a>
+</div>
+
+<div align="center">
+  <%= moduleDescription %>
+</div>
+
+## Features
+
+- **Wow:** so amazing
+- **Amazing:** so wow 
+- **Fancy:** has a tie and everything
 
 ## Install
 
