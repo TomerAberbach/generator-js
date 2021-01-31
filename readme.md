@@ -47,4 +47,4 @@ For bugs and feature requests, [please create an issue](https://github.com/Tomer
 
 ## License
 
-[MIT License](https://github.com/TomerAberbach/generator-js/blob/main/license) © [Tomer Aberbach](https://github.com/TomerAberbach)
+[MIT](https://github.com/TomerAberbach/generator-js/blob/main/license) © [Tomer Aberbach](https://github.com/TomerAberbach)
