@@ -101,6 +101,7 @@ Object.assign(JsGenerator.prototype, {
       mv(`gitignore`, `.gitignore`)
       mv(`npmrc`, `.npmrc`)
       mv(`_package.json`, `package.json`)
+      mv(`github`, `.github`)
     },
     async license() {
       this.writeDestination(

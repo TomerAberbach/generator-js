@@ -41,6 +41,7 @@ test.serial(`generates expected files`, async () => {
 
   assert.file([
     `.git`,
+    `.github`,
     `.gitignore`,
     `.npmrc`,
     `src/index.js`,
