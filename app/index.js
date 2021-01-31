@@ -85,7 +85,9 @@ Object.assign(JsGenerator.prototype, {
         unscopedModuleName,
         camelCasedModuleName: camelCase(unscopedModuleName),
         licenseIdentifier: license.identifier,
-        licenseName: license.name
+        licenseName: license.name.endsWith(` License`)
+          ? license.name.substring(0, ` License`.length)
+          : license.name
       }
 
       this.fs.copyTpl(
