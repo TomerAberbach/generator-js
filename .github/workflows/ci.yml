@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.nodejs }}
 
       - name: Install pnpm
-        run: npx pnpm add -g pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
         run: pnpm install
