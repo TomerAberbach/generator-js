@@ -17,15 +17,15 @@
   "files": [
     "src"
   ],
-  "type": "module",
+  "type": "module",<%if (isNodeSupported) { %>
   "engines": {
     "node": ">= 12.17"
-  },
+  },<% } %><%if (isBrowserSupported) { %>
   "browserslist": [
     "defaults",
     "not IE 11",
     "not op_mini all"
-  ],
+  ],<% } %>
   "exports": "./src/index.js",
   "module": "./src/index.js",
   "scripts": {

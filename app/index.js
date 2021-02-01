@@ -34,6 +34,33 @@ Object.assign(JsGenerator.prototype, {
         default: `A ${superb.random()} module.`
       },
       {
+        name: `environmentSupport`,
+        message: `Which environments does your module support?`,
+        choices: [
+          {
+            name: `Node.js only`,
+            value: {
+              isNodeSupported: true,
+              isBrowserSupported: false
+            }
+          },
+          {
+            name: `Browser only`,
+            value: {
+              isNodeSupported: false,
+              isBrowserSupported: true
+            }
+          },
+          {
+            name: `Browser and Node.js`,
+            value: {
+              isNodeSupported: true,
+              isBrowserSupported: true
+            }
+          }
+        ]
+      },
+      {
         type: `list`,
         name: `license`,
         message: `What is your module's license?`,
@@ -74,7 +101,12 @@ Object.assign(JsGenerator.prototype, {
 
   writing: {
     templates() {
-      const { moduleName, license, ...otherAnswers } = this.answers
+      const {
+        moduleName,
+        environmentSupport,
+        license,
+        ...otherAnswers
+      } = this.answers
       const unscopedModuleName = isScoped(moduleName)
         ? moduleName.split(`/`)[1]
         : moduleName
@@ -82,6 +114,7 @@ Object.assign(JsGenerator.prototype, {
       const options = {
         ...otherAnswers,
         moduleName,
+        ...environmentSupport,
         unscopedModuleName,
         camelCasedModuleName: camelCase(unscopedModuleName),
         licenseIdentifier: license.identifier,

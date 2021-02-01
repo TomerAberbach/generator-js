@@ -25,10 +25,11 @@ test.beforeEach(async () => {
   })
 
   run = pify(generator.run.bind(generator))
-  mockPrompt = () =>
+  mockPrompt = ({ isNodeSupported = true, isBrowserSupported = true } = {}) =>
     helpers.mockPrompt(generator, {
       moduleName: `the-best-module`,
       moduleDescription: `The best module.`,
+      environmentSupport: { isNodeSupported, isBrowserSupported },
       license: {
         identifier: `the-best-developer`,
         name: `The Best Developer License`,
@@ -77,6 +78,38 @@ test.serial(`fills in package.json fields`, async () => {
     bugs: {
       url: `https://github.com/TheBestDeveloper/the-best-module/issues`
     },
-    license: `the-best-developer`
+    license: `the-best-developer`,
+    engines: {
+      node: `>= 12.17`
+    },
+    browserslist: [`defaults`, `not IE 11`, `not op_mini all`]
+  })
+})
+
+test.serial(`node only`, async () => {
+  mockPrompt({ isBrowserSupported: false })
+
+  await run()
+
+  assert.jsonFileContent(`package.json`, {
+    engines: {
+      node: `>= 12.17`
+    }
+  })
+  assert.noJsonFileContent(`package.json`, {
+    browserslist: true
+  })
+})
+
+test.serial(`browser only`, async () => {
+  mockPrompt({ isNodeSupported: false })
+
+  await run()
+
+  assert.noJsonFileContent(`package.json`, {
+    engines: true
+  })
+  assert.jsonFileContent(`package.json`, {
+    browserslist: [`defaults`, `not IE 11`, `not op_mini all`]
   })
 })
