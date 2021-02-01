@@ -32,6 +32,7 @@
   "engines": {
     "node": ">= 12.17"
   },
+  "main": "app/index.js",
   "scripts": {
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .eslintignore",
     "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
