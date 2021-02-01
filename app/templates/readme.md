@@ -10,7 +10,7 @@
     <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
   </a>
   <a href="https://bundlephobia.com/result?p=<%= moduleName %>">
-    <img src="https://badgen.net/bundlephobia/minzip/<%= moduleName %>" alt="minzipped size" />
+    <img src="https://badgen.net/bundlephobia/minzip/<%= moduleName %>" alt="minzip size" />
   </a>
 </div>
 

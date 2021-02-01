@@ -10,7 +10,7 @@
     <img src="https://github.com/TomerAberbach/generator-js/workflows/CI/badge.svg" alt="CI" />
   </a>
   <a href="https://bundlephobia.com/result?p=@tomer/generator-js">
-    <img src="https://badgen.net/bundlephobia/minzip/@tomer/generator-js" alt="minzipped size" />
+    <img src="https://badgen.net/bundlephobia/minzip/@tomer/generator-js" alt="minzip size" />
   </a>
 </div>
 
