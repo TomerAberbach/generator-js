@@ -9,8 +9,8 @@
   <a href="https://github.com/TomerAberbach/generator-js/actions">
     <img src="https://github.com/TomerAberbach/generator-js/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://packagephobia.now.sh/result?p=@tomer/generator-js">
-    <img src="https://packagephobia.now.sh/badge?p=@tomer/generator-js" alt="install size" />
+  <a href="https://bundlephobia.com/result?p=@tomer/generator-js">
+    <img src="https://badgen.net/bundlephobia/minzip/@tomer/generator-js" alt="minzipped size" />
   </a>
 </div>
 

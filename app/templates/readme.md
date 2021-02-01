@@ -9,8 +9,8 @@
   <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
     <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://packagephobia.now.sh/result?p=<%= moduleName %>">
-    <img src="https://packagephobia.now.sh/badge?p=<%= moduleName %>" alt="install size" />
+  <a href="https://bundlephobia.com/result?p=<%= moduleName %>">
+    <img src="https://badgen.net/bundlephobia/minzip/<%= moduleName %>" alt="minzipped size" />
   </a>
 </div>
 
