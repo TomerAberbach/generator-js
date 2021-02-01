@@ -10,7 +10,7 @@ devDependencies:
   '@commitlint/cli': 11.0.0
   '@commitlint/config-conventional': 11.0.0
   '@tomer/eslint-config': 0.1.0_eslint@7.19.0
-  '@tomer/prettier-config': 0.0.2_prettier@2.2.1
+  '@tomer/prettier-config': 0.1.0_prettier@2.2.1
   ava: 3.15.0
   ava-fast-check: 4.0.1_ava@3.15.0+fast-check@2.12.0
   c8: 7.4.0
@@ -376,14 +376,16 @@ packages:
       eslint: ^7.0.0
     resolution:
       integrity: sha512-qpIzWPwftIuoa3YWhGifw3YRkVxXE4QrxarwxEcJYRw64gDZuXsShF1BrAWHXcLZWbb7pX+FOkBSqgzWOAg9YQ==
-  /@tomer/prettier-config/0.0.2_prettier@2.2.1:
+  /@tomer/prettier-config/0.1.0_prettier@2.2.1:
     dependencies:
       prettier: 2.2.1
     dev: true
+    engines:
+      node: '>= 12.17'
     peerDependencies:
       prettier: ^2.0.0
     resolution:
-      integrity: sha512-iTnQCgnsgcJi5+wvv6dF+Drxame9YlRpUCKsGHncuq/Qx5UEBYybfxW/8NF1+YoaJMDMHKHJbHSzgxyWFSV8Ig==
+      integrity: sha512-odzw+JNf0mRusgDDAN6y++hHhUXOnWPTV3sMHWpfNlRCOwbke16xh6KozuXtOdNfTfUiof9TFSLKuuwuVyNxSA==
   /@types/cacheable-request/6.0.1:
     dependencies:
       '@types/http-cache-semantics': 4.0.0
@@ -795,7 +797,9 @@ packages:
       yargs: 16.2.0
     dev: true
     engines:
-      node: '>=10.18.0 <11 || >=12.14.0 <12.17.0 || >=12.17.0 <13 || >=14.0.0 <15 || >=15'
+      node:
+        '>=10.18.0 <11 || >=12.14.0 <12.17.0 || >=12.17.0 <13 || >=14.0.0 <15 ||
+        >=15'
     hasBin: true
     resolution:
       integrity: sha512-HGAnk1SHPk4Sx6plFAUkzV/XC1j9+iQhOzt4vBly18/yo0AV8Oytx7mtJd/CR8igCJ5p160N/Oo/cNJi2uSeWA==
@@ -5996,7 +6000,7 @@ specifiers:
   '@commitlint/config-conventional': 11.0.0
   '@sindresorhus/slugify': 1.1.0
   '@tomer/eslint-config': 0.1.0
-  '@tomer/prettier-config': 0.0.2
+  '@tomer/prettier-config': 0.1.0
   ava: 3.15.0
   ava-fast-check: 4.0.1
   c8: 7.4.0

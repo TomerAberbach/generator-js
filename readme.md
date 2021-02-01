@@ -20,7 +20,8 @@
 
 ## Features
 
-- **Unoriginal:** heavily inspired by [`generator-nm`](https://github.com/sindresorhus/generator-nm)!
+- **Unoriginal:** heavily inspired by
+  [`generator-nm`](https://github.com/sindresorhus/generator-nm)!
 - **Opinionated:** probably won't work at all for your use case...
 - **Nosy:** interrogates you about your modules!
 - **Excessive:** needlessly included a pointless fourth "feature" :shrug:
@@ -43,8 +44,10 @@ $ yo @tomer/js
 
 Stars are always welcome!
 
-For bugs and feature requests, [please create an issue](https://github.com/TomerAberbach/generator-js/issues/new).
+For bugs and feature requests,
+[please create an issue](https://github.com/TomerAberbach/generator-js/issues/new).
 
 ## License
 
-[MIT](https://github.com/TomerAberbach/generator-js/blob/main/license) © [Tomer Aberbach](https://github.com/TomerAberbach)
+[MIT](https://github.com/TomerAberbach/generator-js/blob/main/license) ©
+[Tomer Aberbach](https://github.com/TomerAberbach)
