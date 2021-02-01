@@ -6,7 +6,17 @@ const slugify = require(`@sindresorhus/slugify`)
 const superb = require(`superb`)
 const requestLicenses = require(`./helpers/licenses.js`)
 
-class JsGenerator extends Generator {}
+class JsGenerator extends Generator {
+  constructor(...args) {
+    super(...args)
+
+    this.option(`git`, {
+      type: Boolean,
+      description: `Whether to initialize a git repository`,
+      default: true
+    })
+  }
+}
 
 Object.assign(JsGenerator.prototype, {
   initializing: {
@@ -34,6 +44,7 @@ Object.assign(JsGenerator.prototype, {
         default: `A ${superb.random()} module.`
       },
       {
+        type: `list`,
         name: `environmentSupport`,
         message: `Which environments does your module support?`,
         choices: [
@@ -148,7 +159,9 @@ Object.assign(JsGenerator.prototype, {
   },
 
   git() {
-    this.spawnCommandSync(`git`, [`init`])
+    if (this.options.git) {
+      this.spawnCommandSync(`git`, [`init`])
+    }
   },
 
   install() {
