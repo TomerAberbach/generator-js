@@ -72,6 +72,12 @@ Object.assign(JsGenerator.prototype, {
         ]
       },
       {
+        type: `confirm`,
+        name: `includesTypes`,
+        message: `Does your module include type definitions?`,
+        default: true
+      },
+      {
         type: `list`,
         name: `license`,
         message: `What is your module's license?`,
@@ -115,6 +121,7 @@ Object.assign(JsGenerator.prototype, {
       const {
         moduleName,
         environmentSupport,
+        includesTypes,
         license,
         ...otherAnswers
       } = this.answers
@@ -126,6 +133,7 @@ Object.assign(JsGenerator.prototype, {
         ...otherAnswers,
         moduleName,
         ...environmentSupport,
+        includesTypes,
         unscopedModuleName,
         camelCasedModuleName: camelCase(unscopedModuleName),
         licenseIdentifier: license.identifier,
@@ -134,13 +142,13 @@ Object.assign(JsGenerator.prototype, {
           : license.name
       }
 
-      this.fs.copyTpl(
-        this.templatePath(),
-        this.destinationRoot(),
-        options,
-        null,
-        { globOptions: { dot: true } }
-      )
+      const templateGlobs = [`${this.templatePath()}/**`]
+
+      if (!includesTypes) {
+        templateGlobs.push(`!**/*.{d,d-test}.ts`, `!**/tsconfig.json`)
+      }
+
+      this.fs.copyTpl(templateGlobs, this.destinationPath(), options)
 
       const mv = (from, to) =>
         this.fs.move(this.destinationPath(from), this.destinationPath(to))
@@ -165,9 +173,13 @@ Object.assign(JsGenerator.prototype, {
   },
 
   install() {
-    this.scheduleInstallTask(`pnpm`, require(`./helpers/dev-dependencies.js`), {
-      'save-dev': true
-    })
+    this.scheduleInstallTask(
+      `pnpm`,
+      require(`./helpers/dev-dependencies.js`)(this.answers.includesTypes),
+      {
+        'save-dev': true
+      }
+    )
   }
 })
 

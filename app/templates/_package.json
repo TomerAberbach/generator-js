@@ -17,25 +17,30 @@
   "files": [
     "src"
   ],
-  "type": "module",<%if (isNodeSupported) { %>
+  "type": "module",<% if (isNodeSupported) { %>
   "engines": {
     "node": ">= 12.17"
-  },<% } %><%if (isBrowserSupported) { %>
+  },<% } %><% if (isBrowserSupported) { %>
   "browserslist": [
     "defaults",
     "not IE 11",
     "not op_mini all"
   ],<% } %>
   "exports": "./src/index.js",
-  "module": "./src/index.js",
+  "module": "./src/index.js",<%if (includesTypes) { %>
+  "types": "./src/index.d.ts",<% } %>
   "scripts": {
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
     "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
     "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
     "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
-    "lint": "run-s lint:*",
+    "lint": "run-s lint:*",<% if (includesTypes) { %>
+    "test:js": "ava",
+    "test:ts": "tsd",
+    "test": "run-s test:*",
+    "coverage": "c8 run-s test:js"<% } else { %>
     "test": "ava",
-    "coverage": "c8 run-s test"
+    "coverage": "c8 run-s test"<% } %>
   },
   "prettier": "@tomer/prettier-config",
   "eslintConfig": {
@@ -45,9 +50,13 @@
     "*.js": [
       "run-s \"lint:prettier:base -- --write {@}\" --",
       "run-s \"lint:eslint:base -- --fix {@}\" --"
-    ],
+    ],<% if (includesTypes) { %>
+    "*.ts": "run-s \"lint:prettier:base -- --write {@}\" --",<% } %>
     "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
-  },
+  },<% if (includesTypes) { %>
+  "tsd": {
+    "directory": "./test"
+  },<% } %>
   "commitlint": {
     "extends": "@commitlint/config-conventional"
   },

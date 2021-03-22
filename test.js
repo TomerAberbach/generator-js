@@ -25,11 +25,16 @@ test.beforeEach(async () => {
   })
 
   run = pify(generator.run.bind(generator))
-  mockPrompt = ({ isNodeSupported = true, isBrowserSupported = true } = {}) =>
+  mockPrompt = ({
+    isNodeSupported = true,
+    isBrowserSupported = true,
+    includesTypes = false
+  } = {}) =>
     helpers.mockPrompt(generator, {
       moduleName: `the-best-module`,
       moduleDescription: `The best module.`,
       environmentSupport: { isNodeSupported, isBrowserSupported },
+      includesTypes,
       license: {
         identifier: `the-best-developer`,
         name: `The Best Developer License`,
@@ -56,6 +61,29 @@ test.serial(`generates expected files`, async () => {
     `test/index.js`,
     `license`,
     `package.json`,
+    `readme.md`
+  ])
+
+  assert.noFile([`src/index.d.ts`, `test/index.d-test.ts`, `tsconfig.json`])
+})
+
+test.serial(`generates expected files when types are included`, async () => {
+  mockPrompt({ includesTypes: true })
+
+  await run()
+
+  assert.file([
+    `.git`,
+    `.github/workflows/ci.yml`,
+    `.gitignore`,
+    `.npmrc`,
+    `src/index.js`,
+    `src/index.d.ts`,
+    `test/index.js`,
+    `test/index.d-test.ts`,
+    `license`,
+    `package.json`,
+    `tsconfig.json`,
     `readme.md`
   ])
 })
@@ -85,6 +113,25 @@ test.serial(`fills in package.json fields`, async () => {
     browserslist: [`defaults`, `not IE 11`, `not op_mini all`]
   })
 })
+
+test.serial(
+  `fills in package.json fields when types are included`,
+  async () => {
+    mockPrompt({ includesTypes: true })
+
+    await run()
+
+    assert.jsonFileContent(`package.json`, {
+      types: `./src/index.d.ts`,
+      'lint-staged': {
+        '*.ts': `run-s "lint:prettier:base -- --write {@}" --`
+      },
+      tsd: {
+        directory: `./test`
+      }
+    })
+  }
+)
 
 test.serial(`node only`, async () => {
   mockPrompt({ isBrowserSupported: false })
