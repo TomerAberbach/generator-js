@@ -30,6 +30,7 @@
   "module": "./src/index.js",<%if (includesTypes) { %>
   "types": "./src/index.d.ts",<% } %>
   "scripts": {
+    "postinstall": "pnpx --no-install simple-git-hooks",
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
     "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
     "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
@@ -60,10 +61,8 @@
   "commitlint": {
     "extends": "@commitlint/config-conventional"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
+  "simple-git-hooks": {
+    "pre-commit": "pnpx --no-install lint-staged",
+    "commit-msg": "pnpx --no-install commitlint -e"
   }
 }

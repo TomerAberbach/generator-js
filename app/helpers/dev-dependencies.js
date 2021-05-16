@@ -9,10 +9,10 @@ const getDevDependencies = includeTypes => {
     `c8`,
     `eslint`,
     `fast-check`,
-    `husky`,
     `lint-staged`,
     `npm-run-all`,
-    `prettier`
+    `prettier`,
+    `simple-git-hooks`
   ]
 
   if (includeTypes) {
