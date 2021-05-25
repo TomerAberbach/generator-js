@@ -30,7 +30,7 @@
   "module": "./src/index.js",<%if (includesTypes) { %>
   "types": "./src/index.d.ts",<% } %>
   "scripts": {
-    "postinstall": "pnpx --no-install simple-git-hooks",
+    "prepare": "pnpx --no-install simple-git-hooks",
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
     "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
     "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
