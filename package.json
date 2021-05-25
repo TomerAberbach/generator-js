@@ -34,7 +34,7 @@
   },
   "main": "app/index.js",
   "scripts": {
-    "postinstall": "pnpx --no-install simple-git-hooks",
+    "prepare": "pnpx --no-install simple-git-hooks",
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .eslintignore",
     "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
     "lint:eslint:base": "eslint --cache --ext js --ignore-path .eslintignore",
