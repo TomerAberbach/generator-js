@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "@tomer/generator-js",
   "version": "0.1.0",
   "author": {
@@ -28,7 +29,6 @@
   "files": [
     "app"
   ],
-  "type": "module",
   "engines": {
     "node": ">= 12.17"
   },
@@ -72,32 +72,33 @@
     "commit-msg": "pnpx --no-install commitlint -e"
   },
   "dependencies": {
-    "@sindresorhus/slugify": "1.1.0",
+    "@sindresorhus/slugify": "2.1.0",
     "camelcase": "6.2.0",
-    "got": "11.8.1",
-    "is-scoped": "2.1.0",
-    "normalize-url": "5.3.0",
+    "got": "11.8.2",
+    "is-scoped": "3.0.0",
+    "normalize-url": "6.0.1",
     "superb": "4.0.0",
-    "yeoman-generator": "4.13.0"
+    "yeoman-generator": "5.3.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
-    "@tomer/eslint-config": "0.1.0",
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
+    "@tomer/eslint-config": "0.1.1",
     "@tomer/prettier-config": "0.1.0",
     "ava": "3.15.0",
-    "ava-fast-check": "4.0.1",
-    "c8": "7.4.0",
+    "ava-fast-check": "4.0.2",
+    "c8": "7.7.2",
     "del": "6.0.0",
     "del-cli": "3.0.1",
-    "eslint": "7.19.0",
-    "fast-check": "2.12.0",
-    "lint-staged": "10.5.3",
+    "eslint": "7.27.0",
+    "fast-check": "2.14.0",
+    "lint-staged": "11.0.0",
     "npm-run-all": "4.1.5",
     "pify": "5.0.0",
-    "prettier": "2.2.1",
+    "prettier": "2.3.0",
     "simple-git-hooks": "2.4.1",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "4.0.0"
+    "yeoman-environment": "3.4.1",
+    "yeoman-test": "6.1.0"
   }
 }

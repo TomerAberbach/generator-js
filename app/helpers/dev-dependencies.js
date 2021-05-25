@@ -22,4 +22,4 @@ const getDevDependencies = includeTypes => {
   return devDependencies
 }
 
-module.exports = getDevDependencies
+export default getDevDependencies

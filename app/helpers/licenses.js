@@ -1,4 +1,4 @@
-const got = require(`got`)
+import got from 'got'
 
 const requestLicenses =
   process.env.NODE_ENV === `test`
@@ -15,4 +15,4 @@ const requestLicenses =
           })
         )
 
-module.exports = requestLicenses
+export default requestLicenses

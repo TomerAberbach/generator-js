@@ -20,11 +20,11 @@ let mockPrompt
 test.beforeEach(async () => {
   await pify(helpers.testDirectory)(tempDirname)
 
-  const generator = helpers.createGenerator(`js:app`, [`../app`], null, {
+  const generator = await helpers.createGenerator(`js:app`, [`../app`], null, {
     skipInstall: true
   })
 
-  run = pify(generator.run.bind(generator))
+  run = (...args) => generator.run(...args)
   mockPrompt = ({
     isNodeSupported = true,
     isBrowserSupported = true,

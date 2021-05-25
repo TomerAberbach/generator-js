@@ -1,10 +1,11 @@
-const camelCase = require(`camelcase`)
-const Generator = require(`yeoman-generator`)
-const isScoped = require(`is-scoped`)
-const normalizeUrl = require(`normalize-url`)
-const slugify = require(`@sindresorhus/slugify`)
-const superb = require(`superb`)
-const requestLicenses = require(`./helpers/licenses.js`)
+import camelCase from 'camelcase'
+import Generator from 'yeoman-generator'
+import isScoped from 'is-scoped'
+import normalizeUrl from 'normalize-url'
+import slugify from '@sindresorhus/slugify'
+import superb from 'superb'
+import requestLicenses from './helpers/licenses.js'
+import getDevDependencies from './helpers/dev-dependencies.js'
 
 class JsGenerator extends Generator {
   constructor(...args) {
@@ -172,15 +173,17 @@ Object.assign(JsGenerator.prototype, {
     }
   },
 
-  install() {
-    this.scheduleInstallTask(
-      `pnpm`,
-      require(`./helpers/dev-dependencies.js`)(this.answers.includesTypes),
-      {
-        'save-dev': true
-      }
-    )
+  async install() {
+    if (process.env.NODE_ENV === `test`) {
+      return
+    }
+
+    await this.spawnCommand(`pnpm`, [
+      `install`,
+      `--save-dev`,
+      ...getDevDependencies(this.answers.includesTypes)
+    ])
   }
 })
 
-module.exports = JsGenerator
+export default JsGenerator
