@@ -21,7 +21,7 @@
 ## Features
 
 - **Wow:** so amazing
-- **Amazing:** so wow 
+- **Amazing:** so wow
 - **Fancy:** has a tie and everything
 
 ## Install
@@ -43,8 +43,11 @@ console.log(<%= camelCasedModuleName %>())
 
 Stars are always welcome!
 
-For bugs and feature requests, [please create an issue](https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/issues/new).
+For bugs and feature requests, [please create an issue](https://github.com/<%=
+githubUsername %>/<%= unscopedModuleName %>/issues/new).
 
 ## License
 
-[<%= licenseName %>](https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/blob/main/license) © [<%= name %>](https://github.com/<%= githubUsername %>)
+[<%= licenseName %>](https://github.com/<%= githubUsername %>/<%=
+unscopedModuleName %>/blob/main/license) © [<%= name %>](https://github.com/<%=
+githubUsername %>)

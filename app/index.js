@@ -14,7 +14,7 @@ class JsGenerator extends Generator {
     this.option(`git`, {
       type: Boolean,
       description: `Whether to initialize a git repository`,
-      default: true
+      default: true,
     })
   }
 }
@@ -28,7 +28,7 @@ Object.assign(JsGenerator.prototype, {
     },
     async licenses() {
       this.licenses = await requestLicenses()
-    }
+    },
   },
 
   async prompting() {
@@ -37,12 +37,12 @@ Object.assign(JsGenerator.prototype, {
         name: `moduleName`,
         message: `What is your module's name?`,
         default: () => slugify(this.determineAppname()),
-        filter: answer => (isScoped(answer) ? answer : slugify(answer))
+        filter: answer => (isScoped(answer) ? answer : slugify(answer)),
       },
       {
         name: `moduleDescription`,
         message: `What is your module's description?`,
-        default: `A ${superb.random()} module.`
+        default: `A ${superb.random()} module.`,
       },
       {
         type: `list`,
@@ -53,30 +53,30 @@ Object.assign(JsGenerator.prototype, {
             name: `Node.js only`,
             value: {
               isNodeSupported: true,
-              isBrowserSupported: false
-            }
+              isBrowserSupported: false,
+            },
           },
           {
             name: `Browser only`,
             value: {
               isNodeSupported: false,
-              isBrowserSupported: true
-            }
+              isBrowserSupported: true,
+            },
           },
           {
             name: `Browser and Node.js`,
             value: {
               isNodeSupported: true,
-              isBrowserSupported: true
-            }
-          }
-        ]
+              isBrowserSupported: true,
+            },
+          },
+        ],
       },
       {
         type: `confirm`,
         name: `includesTypes`,
         message: `Does your module include type definitions?`,
-        default: true
+        default: true,
       },
       {
         type: `list`,
@@ -84,27 +84,27 @@ Object.assign(JsGenerator.prototype, {
         message: `What is your module's license?`,
         choices: this.licenses.map(license => ({
           name: license.name,
-          value: license
+          value: license,
         })),
-        default: `MIT License`
+        default: `MIT License`,
       },
       {
         name: `name`,
         message: `What is your name?`,
         default: this.user.git.name(),
-        store: true
+        store: true,
       },
       {
         name: `email`,
         message: `What is your email address?`,
         default: this.user.git.email(),
-        store: true
+        store: true,
       },
       {
         name: `website`,
         message: `What is your website's URL?`,
         filter: answer => normalizeUrl(answer),
-        store: true
+        store: true,
       },
       {
         name: `githubUsername`,
@@ -112,8 +112,8 @@ Object.assign(JsGenerator.prototype, {
         validate: answer =>
           answer.length > 0 || `You must provide a GitHub username`,
         default: this.githubUsername,
-        store: true
-      }
+        store: true,
+      },
     ])
   },
 
@@ -140,7 +140,7 @@ Object.assign(JsGenerator.prototype, {
         licenseIdentifier: license.identifier,
         licenseName: license.name.endsWith(` License`)
           ? license.name.substring(0, license.name.length - ` License`.length)
-          : license.name
+          : license.name,
       }
 
       const templateGlobs = [`${this.templatePath()}/**`]
@@ -162,9 +162,9 @@ Object.assign(JsGenerator.prototype, {
     async license() {
       this.writeDestination(
         `license`,
-        await this.answers.license.requestContent(this.answers.name)
+        await this.answers.license.requestContent(this.answers.name),
       )
-    }
+    },
   },
 
   git() {
@@ -181,9 +181,9 @@ Object.assign(JsGenerator.prototype, {
     await this.spawnCommand(`pnpm`, [
       `install`,
       `--save-dev`,
-      ...getDevDependencies(this.answers.includesTypes)
+      ...getDevDependencies(this.answers.includesTypes),
     ])
-  }
+  },
 })
 
 export default JsGenerator

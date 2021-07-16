@@ -30,39 +30,8 @@
   "module": "./src/index.js",<%if (includesTypes) { %>
   "types": "./src/index.d.ts",<% } %>
   "scripts": {
-    "prepare": "pnpx --no-install simple-git-hooks",
-    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
-    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
-    "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
-    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
-    "lint": "run-s lint:*",<% if (includesTypes) { %>
-    "test:js": "ava",
-    "test:ts": "tsd",
-    "test": "run-s test:*",
-    "coverage": "c8 run-s test:js"<% } else { %>
-    "test": "ava",
-    "coverage": "c8 run-s test"<% } %>
-  },
-  "prettier": "@tomer/prettier-config",
-  "eslintConfig": {
-    "extends": "@tomer"
-  },
-  "lint-staged": {
-    "*.js": [
-      "run-s \"lint:prettier:base -- --write {@}\" --",
-      "run-s \"lint:eslint:base -- --fix {@}\" --"
-    ],<% if (includesTypes) { %>
-    "*.ts": "run-s \"lint:prettier:base -- --write {@}\" --",<% } %>
-    "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
-  },<% if (includesTypes) { %>
-  "tsd": {
-    "directory": "./test"
-  },<% } %>
-  "commitlint": {
-    "extends": "@commitlint/config-conventional"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpx --no-install lint-staged",
-    "commit-msg": "pnpx --no-install commitlint -e"
+    "prepare": "tomer install",
+    "lint": "tomer lint",
+    "test": "tomer test"
   }
 }

@@ -34,14 +34,9 @@
   },
   "main": "app/index.js",
   "scripts": {
-    "prepare": "pnpx --no-install simple-git-hooks",
-    "lint:prettier:base": "prettier --loglevel silent --ignore-path .eslintignore",
-    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
-    "lint:eslint:base": "eslint --cache --ext js --ignore-path .eslintignore",
-    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
-    "lint": "run-s lint:*",
-    "test": "ava",
-    "coverage": "c8 run-s test",
+    "prepare": "tomer install",
+    "lint": "tomer lint",
+    "test": "tomer test",
     "clean": "del temp"
   },
   "prettier": "@tomer/prettier-config",
@@ -51,54 +46,29 @@
       "compat/compat": "off"
     }
   },
-  "lint-staged": {
-    "*.js": [
-      "run-s \"lint:prettier:base -- --write {@}\" --",
-      "run-s \"lint:eslint:base -- --fix {@}\" --"
-    ],
-    "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
-  },
   "ava": {
     "files": [
       "!./app/templates/**/*"
     ],
     "failWithoutAssertions": false
   },
-  "commitlint": {
-    "extends": "@commitlint/config-conventional"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpx --no-install lint-staged",
-    "commit-msg": "pnpx --no-install commitlint -e"
-  },
   "dependencies": {
     "@sindresorhus/slugify": "2.1.0",
     "camelcase": "6.2.0",
     "got": "11.8.2",
     "is-scoped": "3.0.0",
-    "normalize-url": "6.0.1",
+    "normalize-url": "7.0.0",
     "superb": "4.0.0",
-    "yeoman-generator": "5.3.0"
+    "yeoman-generator": "5.4.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "12.1.4",
-    "@commitlint/config-conventional": "12.1.4",
-    "@tomer/eslint-config": "0.1.1",
-    "@tomer/prettier-config": "0.1.0",
     "ava": "3.15.0",
-    "ava-fast-check": "4.0.2",
-    "c8": "7.7.2",
     "del": "6.0.0",
-    "del-cli": "3.0.1",
-    "eslint": "7.27.0",
-    "fast-check": "2.14.0",
-    "lint-staged": "11.0.0",
-    "npm-run-all": "4.1.5",
+    "del-cli": "4.0.1",
     "pify": "5.0.0",
-    "prettier": "2.3.0",
-    "simple-git-hooks": "2.4.1",
+    "tomer": "0.0.3",
     "yeoman-assert": "3.1.1",
-    "yeoman-environment": "3.4.1",
-    "yeoman-test": "6.1.0"
+    "yeoman-environment": "3.5.1",
+    "yeoman-test": "6.2.0"
   }
 }

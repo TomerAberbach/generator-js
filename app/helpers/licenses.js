@@ -11,8 +11,8 @@ const requestLicenses =
             requestContent: async name =>
               (await got(url).json()).body
                 .replace(`[year]`, String(new Date().getFullYear()))
-                .replace(`[fullname]`, name)
-          })
+                .replace(`[fullname]`, name),
+          }),
         )
 
 export default requestLicenses

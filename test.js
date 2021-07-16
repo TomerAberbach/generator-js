@@ -21,14 +21,14 @@ test.beforeEach(async () => {
   await pify(helpers.testDirectory)(tempDirname)
 
   const generator = await helpers.createGenerator(`js:app`, [`../app`], null, {
-    skipInstall: true
+    skipInstall: true,
   })
 
   run = (...args) => generator.run(...args)
   mockPrompt = ({
     isNodeSupported = true,
     isBrowserSupported = true,
-    includesTypes = false
+    includesTypes = false,
   } = {}) =>
     helpers.mockPrompt(generator, {
       moduleName: `the-best-module`,
@@ -38,12 +38,12 @@ test.beforeEach(async () => {
       license: {
         identifier: `the-best-developer`,
         name: `The Best Developer License`,
-        requestContent: name => Promise.resolve(`${name} did it all!`)
+        requestContent: name => Promise.resolve(`${name} did it all!`),
       },
       name: `The Best Developer`,
       email: `thebestdeveloper@thebestdeveloper.com`,
       website: `https://thebestdeveloper.com`,
-      githubUsername: `TheBestDeveloper`
+      githubUsername: `TheBestDeveloper`,
     })
 })
 
@@ -61,7 +61,7 @@ test.serial(`generates expected files`, async () => {
     `test/index.js`,
     `license`,
     `package.json`,
-    `readme.md`
+    `readme.md`,
   ])
 
   assert.noFile([`src/index.d.ts`, `test/index.d-test.ts`, `tsconfig.json`])
@@ -84,7 +84,7 @@ test.serial(`generates expected files when types are included`, async () => {
     `license`,
     `package.json`,
     `tsconfig.json`,
-    `readme.md`
+    `readme.md`,
   ])
 })
 
@@ -98,19 +98,19 @@ test.serial(`fills in package.json fields`, async () => {
     author: {
       name: `The Best Developer`,
       email: `thebestdeveloper@thebestdeveloper.com`,
-      url: `https://thebestdeveloper.com`
+      url: `https://thebestdeveloper.com`,
     },
     description: `The best module.`,
     homepage: `https://github.com/TheBestDeveloper/the-best-module`,
     repository: `TheBestDeveloper/the-best-module`,
     bugs: {
-      url: `https://github.com/TheBestDeveloper/the-best-module/issues`
+      url: `https://github.com/TheBestDeveloper/the-best-module/issues`,
     },
     license: `the-best-developer`,
     engines: {
-      node: `>= 12.17`
+      node: `>= 12.17`,
     },
-    browserslist: [`defaults`, `not IE 11`, `not op_mini all`]
+    browserslist: [`defaults`, `not IE 11`, `not op_mini all`],
   })
 })
 
@@ -123,14 +123,8 @@ test.serial(
 
     assert.jsonFileContent(`package.json`, {
       types: `./src/index.d.ts`,
-      'lint-staged': {
-        '*.ts': `run-s "lint:prettier:base -- --write {@}" --`
-      },
-      tsd: {
-        directory: `./test`
-      }
     })
-  }
+  },
 )
 
 test.serial(`node only`, async () => {
@@ -140,11 +134,11 @@ test.serial(`node only`, async () => {
 
   assert.jsonFileContent(`package.json`, {
     engines: {
-      node: `>= 12.17`
-    }
+      node: `>= 12.17`,
+    },
   })
   assert.noJsonFileContent(`package.json`, {
-    browserslist: true
+    browserslist: true,
   })
 })
 
@@ -154,9 +148,9 @@ test.serial(`browser only`, async () => {
   await run()
 
   assert.noJsonFileContent(`package.json`, {
-    engines: true
+    engines: true,
   })
   assert.jsonFileContent(`package.json`, {
-    browserslist: [`defaults`, `not IE 11`, `not op_mini all`]
+    browserslist: [`defaults`, `not IE 11`, `not op_mini all`],
   })
 })
