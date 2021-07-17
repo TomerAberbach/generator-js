@@ -182,6 +182,7 @@ Object.assign(JsGenerator.prototype, {
       `--save-dev`,
       `ava`,
       `ava-fast-check`,
+      `fast-check`,
       `tomer`,
     ])
   },
