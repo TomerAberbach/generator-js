@@ -177,14 +177,18 @@ Object.assign(JsGenerator.prototype, {
       return
     }
 
-    await this.spawnCommand(`pnpm`, [
-      `install`,
-      `--save-dev`,
-      `ava`,
-      `ava-fast-check`,
-      `fast-check`,
-      `tomer`,
-    ])
+    await this.spawnCommand(
+      `pnpm`,
+      [
+        `install`,
+        `--save-dev`,
+        `ava`,
+        `ava-fast-check`,
+        `fast-check`,
+        `tomer`,
+        this.answers.includesTypes && `tsd`,
+      ].filter(Boolean),
+    )
   },
 })
 
