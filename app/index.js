@@ -5,7 +5,6 @@ import normalizeUrl from 'normalize-url'
 import slugify from '@sindresorhus/slugify'
 import superb from 'superb'
 import requestLicenses from './helpers/licenses.js'
-import getDevDependencies from './helpers/dev-dependencies.js'
 
 class JsGenerator extends Generator {
   constructor(...args) {
@@ -146,7 +145,7 @@ Object.assign(JsGenerator.prototype, {
       const templateGlobs = [`${this.templatePath()}/**`]
 
       if (!includesTypes) {
-        templateGlobs.push(`!**/*.{d,d-test}.ts`, `!**/tsconfig.json`)
+        templateGlobs.push(`!(**/*.{d,test-d}.ts)`, `!(**/tsconfig.json)`)
       }
 
       this.fs.copyTpl(templateGlobs, this.destinationPath(), options)
@@ -178,11 +177,7 @@ Object.assign(JsGenerator.prototype, {
       return
     }
 
-    await this.spawnCommand(`pnpm`, [
-      `install`,
-      `--save-dev`,
-      ...getDevDependencies(this.answers.includesTypes),
-    ])
+    await this.spawnCommand(`pnpm`, [`install`, `--save-dev`, `ava`, `tomer`])
   },
 })
 

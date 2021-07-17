@@ -64,7 +64,7 @@ test.serial(`generates expected files`, async () => {
     `readme.md`,
   ])
 
-  assert.noFile([`src/index.d.ts`, `test/index.d-test.ts`, `tsconfig.json`])
+  assert.noFile([`src/index.d.ts`, `test-d/index.test-d.ts`, `tsconfig.json`])
 })
 
 test.serial(`generates expected files when types are included`, async () => {
@@ -80,7 +80,7 @@ test.serial(`generates expected files when types are included`, async () => {
     `src/index.js`,
     `src/index.d.ts`,
     `test/index.js`,
-    `test/index.d-test.ts`,
+    `test-d/index.test-d.ts`,
     `license`,
     `package.json`,
     `tsconfig.json`,
