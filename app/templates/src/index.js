@@ -1,3 +1,3 @@
-const <%= camelCasedModuleName %> = () => `Hello World!`
-
-export default <%= camelCasedModuleName %>
+export default function <%= camelCasedModuleName %>() {
+  return `Hello World!`
+}

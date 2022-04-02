@@ -4,7 +4,8 @@ import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
 import slugify from '@sindresorhus/slugify'
 import superb from 'superb'
-import requestLicenses from './helpers/licenses.js'
+import licenses from 'spdx-license-list/full.js'
+import indefinite from 'indefinite'
 
 class JsGenerator extends Generator {
   constructor(...args) {
@@ -16,19 +17,12 @@ class JsGenerator extends Generator {
       default: true,
     })
   }
-}
 
-Object.assign(JsGenerator.prototype, {
-  initializing: {
-    async githubUsername() {
-      try {
-        this.githubUsername = await this.user.github.username()
-      } catch {}
-    },
-    async licenses() {
-      this.licenses = await requestLicenses()
-    },
-  },
+  async initializing() {
+    try {
+      this.githubUsername = await this.user.github.username()
+    } catch {}
+  }
 
   async prompting() {
     this.answers = await this.prompt([
@@ -41,7 +35,7 @@ Object.assign(JsGenerator.prototype, {
       {
         name: `moduleDescription`,
         message: `What is your module's description?`,
-        default: `A ${superb.random()} module.`,
+        default: `${indefinite(superb.random(), { capitalize: true })} module.`,
       },
       {
         type: `list`,
@@ -72,19 +66,36 @@ Object.assign(JsGenerator.prototype, {
         ],
       },
       {
-        type: `confirm`,
-        name: `includesTypes`,
-        message: `Does your module include type definitions?`,
-        default: true,
+        type: `list`,
+        name: `typeSupport`,
+        message: `Does your module use TypeScript?`,
+        choices: [
+          {
+            name: `JavaScript only`,
+            value: `js`,
+          },
+          {
+            name: `JavaScript with type definitions`,
+            value: `dts`,
+          },
+          {
+            name: `TypeScript only`,
+            value: `ts`,
+          },
+        ],
+        default: `TypeScript only`,
       },
       {
         type: `list`,
         name: `license`,
         message: `What is your module's license?`,
-        choices: this.licenses.map(license => ({
-          name: license.name,
-          value: license,
-        })),
+        choices: [`MIT`, `Apache-2.0`].map(identifier => {
+          const license = licenses[identifier]
+          return {
+            name: license.name,
+            value: { ...license, identifier },
+          }
+        }),
         default: `MIT License`,
       },
       {
@@ -114,82 +125,96 @@ Object.assign(JsGenerator.prototype, {
         store: true,
       },
     ])
-  },
+    this.answers.includesTypes = this.answers.typeSupport !== `js`
+  }
 
-  writing: {
-    templates() {
-      const {
-        moduleName,
-        environmentSupport,
-        includesTypes,
-        license,
-        ...otherAnswers
-      } = this.answers
-      const unscopedModuleName = isScoped(moduleName)
-        ? moduleName.split(`/`)[1]
-        : moduleName
+  writing() {
+    const {
+      moduleName,
+      environmentSupport,
+      includesTypes,
+      typeSupport,
+      license,
+      ...otherAnswers
+    } = this.answers
+    const unscopedModuleName = isScoped(moduleName)
+      ? moduleName.split(`/`)[1]
+      : moduleName
+    const isGoogle = license.identifier === `Apache-2.0`
 
-      const options = {
-        ...otherAnswers,
-        moduleName,
-        ...environmentSupport,
-        includesTypes,
-        unscopedModuleName,
-        camelCasedModuleName: camelCase(unscopedModuleName),
-        licenseIdentifier: license.identifier,
-        licenseName: license.name.endsWith(` License`)
-          ? license.name.substring(0, license.name.length - ` License`.length)
-          : license.name,
-      }
+    const options = {
+      ...otherAnswers,
+      moduleName,
+      ...environmentSupport,
+      includesTypes,
+      entryName: environmentSupport.isBrowserSupported ? `index.min` : `index`,
+      unscopedModuleName,
+      camelCasedModuleName: camelCase(unscopedModuleName),
+      licenseIdentifier: license.identifier,
+      licenseName: license.name.endsWith(` License`)
+        ? license.name.substring(0, license.name.length - ` License`.length)
+        : license.name,
+      isGoogle,
+    }
 
-      const templateGlobs = [`${this.templatePath()}/**`]
+    this.fs.copyTpl(
+      [
+        `${this.templatePath()}/src/**/${
+          typeSupport === `ts` ? `!(*.d).ts` : `*.js`
+        }`,
+        typeSupport === `dts` && `${this.templatePath()}/src/**/*.d.ts`,
+        `${this.templatePath()}/test/**/*.${
+          typeSupport === `js` ? `js` : `ts`
+        }`,
+        `${this.templatePath()}/github`,
+        `${this.templatePath()}/_package.json`,
+        `${this.templatePath()}/gitattributes`,
+        `${this.templatePath()}/gitignore`,
+        `${this.templatePath()}/readme.md`,
+        isGoogle && `${this.templatePath()}/contributing.md`,
+        includesTypes && `${this.templatePath()}/tsconfig.json`,
+      ].filter(Boolean),
+      this.destinationPath(),
+      options,
+    )
 
-      if (!includesTypes) {
-        templateGlobs.push(`!(**/*.{d,test-d}.ts)`, `!(**/tsconfig.json)`)
-      }
-
-      this.fs.copyTpl(templateGlobs, this.destinationPath(), options)
-
-      const mv = (from, to) =>
-        this.fs.move(this.destinationPath(from), this.destinationPath(to))
-      mv(`gitignore`, `.gitignore`)
-      mv(`gitattributes`, `.gitattributes`)
-      mv(`npmrc`, `.npmrc`)
-      mv(`_package.json`, `package.json`)
-      mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
-    },
-    async license() {
-      this.writeDestination(
-        `license`,
-        await this.answers.license.requestContent(this.answers.name),
-      )
-    },
-  },
+    const mv = (from, to) =>
+      this.fs.move(this.destinationPath(from), this.destinationPath(to))
+    mv(`gitignore`, `.gitignore`)
+    mv(`gitattributes`, `.gitattributes`)
+    mv(`_package.json`, `package.json`)
+    mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
+    this.writeDestination(
+      `license`,
+      license.licenseText
+        .replace(`<year>`, String(new Date().getFullYear()))
+        .replace(`<copyright holders>`, this.answers.name),
+    )
+  }
 
   git() {
     if (this.options.git) {
       this.spawnCommandSync(`git`, [`init`])
     }
-  },
+  }
 
   async install() {
-    if (process.env.NODE_ENV === `test`) {
-      return
-    }
-
     await this.spawnCommand(
       `pnpm`,
-      [
-        `install`,
-        `--save-dev`,
-        `ava`,
-        `ava-fast-check`,
-        `fast-check`,
-        `tomer`,
-        this.answers.includesTypes && `tsd`,
-      ].filter(Boolean),
+      [`install`, `--save-dev`, `tomer`].filter(Boolean),
     )
-  },
-})
+  }
+
+  async end() {
+    await this.spawnCommand(`pnpm`, [`format`])
+    await this.spawnCommand(`pnpm`, [`lint`])
+
+    if (this.answers.includesTypes) {
+      await this.spawnCommand(`pnpm`, [`typecheck`])
+    }
+
+    await this.spawnCommand(`pnpm`, [`test`, `--`, `--no-watch`])
+  }
+}
 
 export default JsGenerator

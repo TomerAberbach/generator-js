@@ -45,9 +45,18 @@ Stars are always welcome!
 
 For bugs and feature requests, [please create an issue](https://github.com/<%=
 githubUsername %>/<%= unscopedModuleName %>/issues/new).
+<% if (isGoogle) { %>
+For pull requests, please read the
+[contributing guidelines](https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/blob/main/contributing.md).
+<% } %>
 
 ## License
+<% if (isGoogle) { %>
+[Apache License 2.0](https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/blob/main/license)
 
+This is not an official Google product.
+<% } else { %>
 [<%= licenseName %>](https://github.com/<%= githubUsername %>/<%=
 unscopedModuleName %>/blob/main/license) © [<%= name %>](https://github.com/<%=
 githubUsername %>)
+<% } %>

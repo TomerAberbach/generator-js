@@ -1,3 +1,1 @@
-declare const <%= camelCasedModuleName %>: () => string
-
-export default <%= camelCasedModuleName %>
+export default function <%= camelCasedModuleName %>(): string
