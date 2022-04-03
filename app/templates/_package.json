@@ -19,7 +19,7 @@
   ],
   "type": "module",<% if (isNodeSupported) { %>
   "engines": {
-    "node": ">= 12.17"
+    "node": ">= 14.6"
   },<% } %><% if (isBrowserSupported) { %>
   "browserslist": [
     "defaults",
