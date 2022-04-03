@@ -46,6 +46,6 @@
     "yeoman-generator": "5.6.1"
   },
   "devDependencies": {
-    "tomer": "^0.1.0"
+    "tomer": "^0.1.6"
   }
 }
