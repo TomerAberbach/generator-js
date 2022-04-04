@@ -9,8 +9,11 @@
   <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
     <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://bundlephobia.com/result?p=<%= moduleName %>">
-    <img src="https://badgen.net/bundlephobia/minzip/<%= moduleName %>" alt="minzip size" />
+  <a href="http://img.badgesize.io/https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js?compression=gzip&label=gzip">
+    <img src="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js" alt="gzip size" />
+  </a>
+  <a href="http://img.badgesize.io/https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js?compression=brotli&label=brotli">
+    <img src="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js" alt="brotli size" />
   </a>
 </div>
 
