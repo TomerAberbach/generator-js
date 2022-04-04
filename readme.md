@@ -6,12 +6,6 @@
   <a href="https://npmjs.org/package/@tomer/generator-js">
     <img src="https://badgen.now.sh/npm/v/@tomer/generator-js" alt="version" />
   </a>
-  <a href="https://github.com/TomerAberbach/generator-js/actions">
-    <img src="https://github.com/TomerAberbach/generator-js/workflows/CI/badge.svg" alt="CI" />
-  </a>
-  <a href="https://bundlephobia.com/result?p=@tomer/generator-js">
-    <img src="https://badgen.net/bundlephobia/minzip/@tomer/generator-js" alt="minzip size" />
-  </a>
 </div>
 
 <div align="center">
