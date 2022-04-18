@@ -17,7 +17,8 @@
   "files": [
     "dist"
   ],
-  "type": "module",<% if (isNodeSupported) { %>
+  "type": "module",
+  "sideEffects": false,<% if (isNodeSupported) { %>
   "engines": {
     "node": ">= 14.6"
   },<% } %><% if (isBrowserSupported) { %>
