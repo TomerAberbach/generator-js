@@ -35,7 +35,6 @@
   "types": "./dist/index.d.ts",<% } %>
   "main": "./dist/<%= entryName %>.cjs",
   "module": "./dist/<%= entryName %>.js",
-  "prettier": "tomer/prettier",
   "scripts": {
     "prepare": "tomer install",
     "format": "tomer format",
@@ -45,5 +44,6 @@
     "build": "tomer build",
     "clean": "tomer clean dist",
     "prepublishOnly": "tomer build"
-  }
+  },
+  "prettier": "tomer/prettier"
 }
