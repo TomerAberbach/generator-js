@@ -1,3 +1,3 @@
-export default function <%= camelCasedModuleName %>(): string {
-  return `Hello World!`
-}
+const <%= camelCasedModuleName %> = (): string => `Hello World!`
+
+export default <%= camelCasedModuleName %>

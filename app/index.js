@@ -201,7 +201,7 @@ class JsGenerator extends Generator {
   async install() {
     await this.spawnCommand(
       `pnpm`,
-      [`install`, `--save-dev`, `tomer`].filter(Boolean),
+      [`install`, `--save-dev`, `tomer`, `@types/jest`].filter(Boolean),
     )
   }
 
