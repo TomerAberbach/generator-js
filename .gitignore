@@ -1,4 +1,3 @@
-node_modules
-.eslintcache
-coverage
-temp
+/node_modules/
+/coverage/
+/dist/

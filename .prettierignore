@@ -1,4 +1,5 @@
-node_modules
-coverage
-temp
+/node_modules/
+/coverage/
+/dist/
+*.tsbuildinfo
 app/templates
