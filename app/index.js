@@ -152,7 +152,7 @@ class JsGenerator extends Generator {
       camelCasedModuleName: camelCase(unscopedModuleName),
       licenseIdentifier: license.identifier,
       licenseName: license.name.endsWith(` License`)
-        ? license.name.substring(0, license.name.length - ` License`.length)
+        ? license.name.slice(0, license.name.length - ` License`.length)
         : license.name,
       isGoogle,
     }
