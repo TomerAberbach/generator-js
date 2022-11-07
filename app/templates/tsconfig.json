@@ -1,9 +1,4 @@
 {
   "extends": "tomer/tsconfig.json",
-  "compilerOptions": {
-    "typeRoots": [
-      "./node_modules/tomer/node_modules/@types",
-      "./node_modules/@types"
-    ]
-  }
+  "include": ["**/*"]
 }
