@@ -207,6 +207,7 @@ class JsGenerator extends Generator {
         `@types/jest`,
         `eslint`,
         `jest`,
+        `prettier`,
         `tomer`,
         `typescript`,
       ].filter(Boolean),
