@@ -1,11 +1,11 @@
+import slugify from '@sindresorhus/slugify'
 import camelCase from 'camelcase'
-import Generator from 'yeoman-generator'
+import indefinite from 'indefinite'
 import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
-import slugify from '@sindresorhus/slugify'
-import superb from 'superb'
 import licenses from 'spdx-license-list/full.js'
-import indefinite from 'indefinite'
+import superb from 'superb'
+import Generator from 'yeoman-generator'
 
 class JsGenerator extends Generator {
   constructor(...args) {
