@@ -20,7 +20,7 @@ class JsGenerator extends Generator {
 
   async initializing() {
     try {
-      this.githubUsername = await this.user.github.username()
+      this.githubUsername = await this.github.username()
     } catch {}
   }
 
@@ -101,13 +101,13 @@ class JsGenerator extends Generator {
       {
         name: `name`,
         message: `What is your name?`,
-        default: this.user.git.name(),
+        default: this.git.name(),
         store: true,
       },
       {
         name: `email`,
         message: `What is your email address?`,
-        default: this.user.git.email(),
+        default: this.git.email(),
         store: true,
       },
       {
