@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://npmjs.org/package/@tomer/generator-js">
-    <img src="https://badgen.now.sh/npm/v/@tomer/generator-js" alt="version" />
+    <img src="https://badgen.net/npm/v/@tomer/generator-js" alt="version" />
   </a>
 </div>
 

@@ -20,7 +20,7 @@
   "type": "module",
   "sideEffects": false,<% if (isNodeSupported) { %>
   "engines": {
-    "node": ">= 16"
+    "node": ">= 18"
   },<% } %><% if (isBrowserSupported) { %>
   "browserslist": [
     "defaults",

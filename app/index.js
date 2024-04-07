@@ -194,18 +194,18 @@ class JsGenerator extends Generator {
 
   git() {
     if (this.options.git) {
-      this.spawnCommandSync(`git`, [`init`])
+      this.spawnSync(`git`, [`init`])
     }
   }
 
   async install() {
-    await this.spawnCommand(
+    await this.spawn(
       `pnpm`,
       [
         `install`,
         `--save-dev`,
         `@types/jest`,
-        `eslint`,
+        `eslint@^8`,
         `jest`,
         `prettier`,
         `tomer`,
@@ -215,14 +215,14 @@ class JsGenerator extends Generator {
   }
 
   async end() {
-    await this.spawnCommand(`pnpm`, [`format`])
-    await this.spawnCommand(`pnpm`, [`lint`])
+    await this.spawn(`pnpm`, [`format`])
+    await this.spawn(`pnpm`, [`lint`])
 
     if (this.answers.includesTypes) {
-      await this.spawnCommand(`pnpm`, [`typecheck`])
+      await this.spawn(`pnpm`, [`typecheck`])
     }
 
-    await this.spawnCommand(`pnpm`, [`test`, `--`, `--no-watch`])
+    await this.spawn(`pnpm`, [`test`, `--`, `--no-watch`])
   }
 }
 

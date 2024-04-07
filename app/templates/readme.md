@@ -4,16 +4,16 @@
 
 <div align="center">
   <a href="https://npmjs.org/package/<%= moduleName %>">
-    <img src="https://badgen.now.sh/npm/v/<%= moduleName %>" alt="version" />
+    <img src="https://badgen.net/npm/v/<%= moduleName %>" alt="version" />
   </a>
   <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
     <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
   </a>
   <a href="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js">
-    <img src="http://img.badgesize.io/https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js?compression=gzip&label=gzip" alt="gzip size" />
+    <img src="https://deno.bundlejs.com/?q=<%= moduleName %>&badge" alt="gzip size" />
   </a>
   <a href="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js">
-    <img src="http://img.badgesize.io/https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js?compression=brotli&label=brotli" alt="brotli size" />
+    <img src="https://deno.bundlejs.com/?q=<%= moduleName %>&config={%22compression%22:{%22type%22:%22brotli%22}}&badge" alt="brotli size" />
   </a>
 </div>
 
