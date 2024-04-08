@@ -44,8 +44,8 @@ devDependencies:
     specifier: ^3.2.5
     version: 3.2.5
   tomer:
-    specifier: ^3.0.4
-    version: 3.0.4(eslint@8.57.0)(jest@29.7.0)(prettier@3.2.5)(typescript@5.4.4)
+    specifier: ^3.1.0
+    version: 3.1.0(eslint@8.57.0)(jest@29.7.0)(prettier@3.2.5)(typescript@5.4.4)
 
 packages:
   /@aashutoshrathi/word-wrap@1.2.6:
@@ -12310,10 +12310,10 @@ packages:
     dependencies:
       is-number: 7.0.0
 
-  /tomer@3.0.4(eslint@8.57.0)(jest@29.7.0)(prettier@3.2.5)(typescript@5.4.4):
+  /tomer@3.1.0(eslint@8.57.0)(jest@29.7.0)(prettier@3.2.5)(typescript@5.4.4):
     resolution:
       {
-        integrity: sha512-Ys8G4viMtQvdWYhuJivo2pGwN+g5FSAxhQg1X9dnb2JL8208FSCrJodm7WcxzmGQWbgEz19w2XXO5hI/L7NshQ==,
+        integrity: sha512-A2ZqP9duAAcU2C2cFwmcb17VXbWKnj1Ehsec+zkwPtDPxZ9cWFuZESL1SxHGociLRLj/WYTz+kNsSxgyldeJRA==,
       }
     engines: { node: '>= 18' }
     hasBin: true

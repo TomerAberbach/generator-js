@@ -1,5 +1,5 @@
 import { expectTypeOf } from 'tomer'
-import <%= camelCasedModuleName %> from '../src/index.js'
+import <%= camelCasedModuleName %> from '../src/index.ts'
 
 test(`<%= camelCasedModuleName %> works`, () => {
   expectTypeOf(<%= camelCasedModuleName %>).toEqualTypeOf<() => string>()

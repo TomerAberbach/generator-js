@@ -48,6 +48,6 @@
   "devDependencies": {
     "eslint": "^8.57.0",
     "prettier": "^3.2.5",
-    "tomer": "^3.0.4"
+    "tomer": "^3.1.0"
   }
 }
