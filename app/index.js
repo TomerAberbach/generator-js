@@ -4,7 +4,7 @@ import indefinite from 'indefinite'
 import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
 import licenses from 'spdx-license-list/full.js'
-import superb from 'superb'
+import { randomSuperbWord } from 'superb'
 import Generator from 'yeoman-generator'
 
 class JsGenerator extends Generator {
@@ -39,7 +39,7 @@ class JsGenerator extends Generator {
       {
         name: `moduleDescription`,
         message: `What is your module's description?`,
-        default: `${indefinite(superb.random(), { capitalize: true })} module.`,
+        default: `${indefinite(randomSuperbWord(), { capitalize: true })} module.`,
       },
       {
         type: `list`,
