@@ -209,7 +209,7 @@ class JsGenerator extends Generator {
         `install`,
         `--save-dev`,
         `@types/jest`,
-        `eslint@^8`,
+        `eslint@^8.57.0`,
         `jest`,
         `prettier`,
         `tomer`,
