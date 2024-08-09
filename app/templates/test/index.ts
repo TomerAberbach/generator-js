@@ -1,4 +1,4 @@
-import { expectTypeOf } from 'tomer'
+import { expect, expectTypeOf, test } from 'vitest'
 import <%= camelCasedModuleName %> from '../src/index.ts'
 
 test(`<%= camelCasedModuleName %> works`, () => {
