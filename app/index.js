@@ -208,12 +208,16 @@ class JsGenerator extends Generator {
       [
         `install`,
         `--save-dev`,
-        `@types/jest`,
+        `@fast-check/vitest`,
+        `@vitest/coverage-v8`,
         `eslint@^8.57.0`,
-        `jest`,
+        ...(this.answers.environmentSupport.isBrowserSupported
+          ? [`jsdom`]
+          : []),
         `prettier`,
         `tomer`,
         `typescript`,
+        `vitest`,
       ].filter(Boolean),
     )
   }
