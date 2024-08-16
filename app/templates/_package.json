@@ -18,28 +18,48 @@
     "dist"
   ],
   "type": "module",
-  "sideEffects": false,<% if (isNodeSupported) { %>
-  "engines": {
-    "node": ">= 18"
-  },<% } %><% if (isBrowserSupported) { %>
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not op_mini all"
-  ],<% } %>
-  "exports": {<% if (includesTypes) { %>
-    "types": "./dist/index.d.ts",<% } %>
-    "require": "./dist/<%= entryName %>.cjs",
-    "import": "./dist/<%= entryName %>.js"
-  },<% if (includesTypes) { %>
-  "types": "./dist/index.d.ts",<% } %>
+  "sideEffects": false,
+  <% if (isNodeSupported) { %>
+    "engines": {
+      "node": ">= 18"
+    },
+  <% } %>
+  <% if (isBrowserSupported) { %>
+    "browserslist": [
+      "defaults",
+      "not IE 11",
+      "not op_mini all"
+    ],
+  <% } %>
+  "exports": {
+    <% if (includesTypes) { %>
+      ".": {
+        "import": {
+          "types": "./dist/index.d.ts",
+          "default": "./dist/<%= entryName %>.js"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./dist/<%= entryName %>.cjs"
+        }
+      }
+    <% } else { %>
+      "require": "./dist/<%= entryName %>.cjs",
+      "import": "./dist/<%= entryName %>.js"
+    <% } %>
+  },
+  <% if (includesTypes) { %>
+    "types": "./dist/index.d.ts",
+  <% } %>
   "main": "./dist/<%= entryName %>.cjs",
   "module": "./dist/<%= entryName %>.js",
   "scripts": {
     "prepare": "tomer install",
     "format": "tomer format",
-    "lint": "tomer lint",<% if (includesTypes) { %>
-    "typecheck": "tomer typecheck",<% } %>
+    "lint": "tomer lint",
+    <% if (includesTypes) { %>
+      "typecheck": "tomer typecheck",
+    <% } %>
     "test": "tomer test",
     "build": "tomer build",
     "clean": "tomer clean dist",
