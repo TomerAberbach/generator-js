@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/issues"
   },
-  "license": "<%= licenseIdentifier %>",
+  "license": "MIT",
   "files": [
     "dist"
   ],

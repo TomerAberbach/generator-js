@@ -90,19 +90,6 @@ class JsGenerator extends Generator {
         default: `TypeScript only`,
       },
       {
-        type: `list`,
-        name: `license`,
-        message: `What is your module's license?`,
-        choices: [`MIT`, `Apache-2.0`].map(identifier => {
-          const license = licenses[identifier]
-          return {
-            name: license.name,
-            value: { ...license, identifier },
-          }
-        }),
-        default: `MIT License`,
-      },
-      {
         name: `name`,
         message: `What is your name?`,
         default: this.gitName,
@@ -138,13 +125,11 @@ class JsGenerator extends Generator {
       environmentSupport,
       includesTypes,
       typeSupport,
-      license,
       ...otherAnswers
     } = this.answers
     const unscopedModuleName = isScoped(moduleName)
       ? moduleName.split(`/`)[1]
       : moduleName
-    const isGoogle = license.identifier === `Apache-2.0`
 
     const options = {
       ...otherAnswers,
@@ -154,11 +139,6 @@ class JsGenerator extends Generator {
       entryName: environmentSupport.isBrowserSupported ? `index.min` : `index`,
       unscopedModuleName,
       camelCasedModuleName: camelCase(unscopedModuleName),
-      licenseIdentifier: license.identifier,
-      licenseName: license.name.endsWith(` License`)
-        ? license.name.slice(0, license.name.length - ` License`.length)
-        : license.name,
-      isGoogle,
     }
 
     this.fs.copyTpl(
@@ -175,7 +155,6 @@ class JsGenerator extends Generator {
         `${this.templatePath()}/gitattributes`,
         `${this.templatePath()}/gitignore`,
         `${this.templatePath()}/readme.md`,
-        isGoogle && `${this.templatePath()}/contributing.md`,
         includesTypes && `${this.templatePath()}/tsconfig.json`,
       ].filter(Boolean),
       this.destinationPath(),
@@ -190,7 +169,7 @@ class JsGenerator extends Generator {
     mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
     this.writeDestination(
       `license`,
-      license.licenseText
+      licenses.MIT.licenseText
         .replace(`<year>`, String(new Date().getFullYear()))
         .replace(`<copyright holders>`, this.answers.name),
     )
