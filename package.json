@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@tomer/generator-js",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomer@aberba.ch",
