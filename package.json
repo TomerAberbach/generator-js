@@ -36,18 +36,18 @@
   "dependencies": {
     "@sindresorhus/slugify": "2.2.1",
     "camelcase": "8.0.0",
-    "got": "14.2.1",
+    "got": "14.4.3",
     "indefinite": "^2.5.1",
     "is-scoped": "3.0.0",
     "normalize-url": "8.0.1",
     "spdx-license-list": "6.9.0",
     "superb": "5.0.0",
-    "typescript": "^5.4.5",
-    "yeoman-generator": "7.1.1"
+    "typescript": "^5.6.3",
+    "yeoman-generator": "7.3.3"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
-    "tomer": "^4.0.1"
+    "eslint": "^8.57.1",
+    "prettier": "^3.3.3",
+    "tomer": "^4.4.0"
   }
 }
