@@ -36,7 +36,7 @@
   "dependencies": {
     "@sindresorhus/slugify": "2.2.1",
     "camelcase": "8.0.0",
-    "got": "14.4.3",
+    "got": "14.4.4",
     "indefinite": "^2.5.1",
     "is-scoped": "3.0.0",
     "normalize-url": "8.0.1",
@@ -48,6 +48,6 @@
   "devDependencies": {
     "eslint": "^8.57.1",
     "prettier": "^3.3.3",
-    "tomer": "^4.4.0"
+    "tomer": "^4.4.3"
   }
 }
