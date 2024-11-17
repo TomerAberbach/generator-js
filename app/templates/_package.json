@@ -54,7 +54,6 @@
   "main": "./dist/<%= entryName %>.cjs",
   "module": "./dist/<%= entryName %>.js",
   "scripts": {
-    "prepare": "tomer install",
     "format": "tomer format",
     "lint": "tomer lint",
     <% if (includesTypes) { %>

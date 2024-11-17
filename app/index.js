@@ -189,7 +189,7 @@ class JsGenerator extends Generator {
         `--save-dev`,
         `@fast-check/vitest`,
         `@vitest/coverage-v8`,
-        `eslint@^8.57.0`,
+        `eslint`,
         ...(this.answers.environmentSupport.isBrowserSupported
           ? [`jsdom`]
           : []),
