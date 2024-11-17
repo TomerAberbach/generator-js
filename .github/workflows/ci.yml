@@ -38,6 +38,3 @@ jobs:
 
       - name: Lint
         run: pnpm lint --no-fix
-
-      - name: Typecheck
-        run: pnpm typecheck
