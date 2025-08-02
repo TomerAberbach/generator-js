@@ -9,10 +9,10 @@
   <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
     <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js">
+  <a href="https://unpkg.com/<%= moduleName %>/dist/index.js">
     <img src="https://deno.bundlejs.com/?q=<%= moduleName %>&badge" alt="gzip size" />
   </a>
-  <a href="https://unpkg.com/<%= moduleName %>/dist/<%= entryName %>.js">
+  <a href="https://unpkg.com/<%= moduleName %>/dist/index.js">
     <img src="https://deno.bundlejs.com/?q=<%= moduleName %>&config={%22compression%22:{%22type%22:%22brotli%22}}&badge" alt="brotli size" />
   </a>
   <a href="https://github.com/sponsors/<%= githubUsername %>">

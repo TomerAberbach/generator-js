@@ -13,56 +13,33 @@
   "bugs": {
     "url": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/issues"
   },
+  "funding": {
+    "url": "https://github.com/sponsors/<%= githubUsername %>"
+  },
   "license": "MIT",
   "files": [
     "dist"
   ],
   "type": "module",
   "sideEffects": false,
-  <% if (isNodeSupported) { %>
-    "engines": {
-      "node": ">= 18"
-    },
-  <% } %>
-  <% if (isBrowserSupported) { %>
-    "browserslist": [
-      "defaults",
-      "not IE 11",
-      "not op_mini all"
-    ],
-  <% } %>
+  "engines": {
+    "node": ">= 22"
+  },
   "exports": {
-    <% if (includesTypes) { %>
-      ".": {
-        "import": {
-          "types": "./dist/index.d.ts",
-          "default": "./dist/<%= entryName %>.js"
-        },
-        "require": {
-          "types": "./dist/index.d.cts",
-          "default": "./dist/<%= entryName %>.cjs"
-        }
-      }
-    <% } else { %>
-      "require": "./dist/<%= entryName %>.cjs",
-      "import": "./dist/<%= entryName %>.js"
-    <% } %>
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
-  <% if (includesTypes) { %>
-    "types": "./dist/index.d.ts",
-  <% } %>
-  "main": "./dist/<%= entryName %>.cjs",
-  "module": "./dist/<%= entryName %>.js",
   "scripts": {
-    "format": "tomer format",
-    "lint": "tomer lint",
-    <% if (includesTypes) { %>
-      "typecheck": "tomer typecheck",
-    <% } %>
-    "test": "tomer test",
-    "build": "tomer build",
-    "clean": "tomer clean dist",
-    "prepublishOnly": "tomer build"
+    "format": "prettier --cache --write .",
+    "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "coverage": "vitest --coverage",
+    "bench": "vitest bench",
+    "build": "tsdown"
   },
-  "prettier": "tomer/prettier"
+  "prettier": "@tomer/prettier-config"
 }

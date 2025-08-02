@@ -5,6 +5,7 @@ import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
 import licenses from 'spdx-license-list/full.js'
 import { randomSuperbWord } from 'superb'
+import githubUsername from 'github-username'
 import Generator from 'yeoman-generator'
 
 class JsGenerator extends Generator {
@@ -16,15 +17,20 @@ class JsGenerator extends Generator {
       description: `Whether to initialize a git repository`,
       default: true,
     })
+    this.option(`jj`, {
+      type: Boolean,
+      description: `Whether to initialize a jj repository`,
+      default: true,
+    })
   }
 
   async initializing() {
     try {
-      ;[this.githubUsername, this.gitName, this.gitEmail] = await Promise.all([
-        this.github.username(),
+      ;[this.gitName, this.gitEmail] = await Promise.all([
         this.git.name(),
         this.git.email(),
       ])
+      this.githubUsername = await githubUsername(this.gitEmail)
     } catch {}
   }
 
@@ -42,32 +48,9 @@ class JsGenerator extends Generator {
         default: `${indefinite(randomSuperbWord(), { capitalize: true })} module.`,
       },
       {
-        type: `list`,
-        name: `environmentSupport`,
-        message: `Which environments does your module support?`,
-        choices: [
-          {
-            name: `Node.js only`,
-            value: {
-              isNodeSupported: true,
-              isBrowserSupported: false,
-            },
-          },
-          {
-            name: `Browser only`,
-            value: {
-              isNodeSupported: false,
-              isBrowserSupported: true,
-            },
-          },
-          {
-            name: `Browser and Node.js`,
-            value: {
-              isNodeSupported: true,
-              isBrowserSupported: true,
-            },
-          },
-        ],
+        type: `confirm`,
+        name: `supportsBrowser`,
+        message: `Does your module support the browser?`,
       },
       {
         type: `list`,
@@ -75,16 +58,12 @@ class JsGenerator extends Generator {
         message: `Does your module use TypeScript?`,
         choices: [
           {
-            name: `JavaScript only`,
-            value: `js`,
+            name: `TypeScript only`,
+            value: `ts`,
           },
           {
             name: `JavaScript with type definitions`,
-            value: `dts`,
-          },
-          {
-            name: `TypeScript only`,
-            value: `ts`,
+            value: `js`,
           },
         ],
         default: `TypeScript only`,
@@ -116,17 +95,11 @@ class JsGenerator extends Generator {
         store: true,
       },
     ])
-    this.answers.includesTypes = this.answers.typeSupport !== `js`
   }
 
   writing() {
-    const {
-      moduleName,
-      environmentSupport,
-      includesTypes,
-      typeSupport,
-      ...otherAnswers
-    } = this.answers
+    const { moduleName, supportsBrowser, typeSupport, ...otherAnswers } =
+      this.answers
     const unscopedModuleName = isScoped(moduleName)
       ? moduleName.split(`/`)[1]
       : moduleName
@@ -134,28 +107,29 @@ class JsGenerator extends Generator {
     const options = {
       ...otherAnswers,
       moduleName,
-      ...environmentSupport,
-      includesTypes,
-      entryName: environmentSupport.isBrowserSupported ? `index.min` : `index`,
+      supportsBrowser,
+      typeSupport,
       unscopedModuleName,
       camelCasedModuleName: camelCase(unscopedModuleName),
     }
 
     this.fs.copyTpl(
       [
-        `${this.templatePath()}/src/**/${
-          typeSupport === `ts` ? `!(*.d).ts` : `*.js`
-        }`,
-        typeSupport === `dts` && `${this.templatePath()}/src/**/*.d.ts`,
-        `${this.templatePath()}/test/**/*.${
-          typeSupport === `js` ? `js` : `ts`
-        }`,
         `${this.templatePath()}/github`,
+        `${this.templatePath()}/src/**/${
+          typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,bench.ts,test.ts}`
+        }`,
+        `${this.templatePath()}/types`,
         `${this.templatePath()}/_package.json`,
+        `${this.templatePath()}/eslint.config.js`,
         `${this.templatePath()}/gitattributes`,
         `${this.templatePath()}/gitignore`,
+        `${this.templatePath()}/prettierignore`,
+        `${this.templatePath()}/tsdown.config.ts`,
+        `${this.templatePath()}/vitest.config.ts`,
+        `${this.templatePath()}/vitest.setup.ts`,
         `${this.templatePath()}/readme.md`,
-        includesTypes && `${this.templatePath()}/tsconfig.json`,
+        `${this.templatePath()}/tsconfig.json`,
       ].filter(Boolean),
       this.destinationPath(),
       options,
@@ -163,10 +137,11 @@ class JsGenerator extends Generator {
 
     const mv = (from, to) =>
       this.fs.move(this.destinationPath(from), this.destinationPath(to))
-    mv(`gitignore`, `.gitignore`)
-    mv(`gitattributes`, `.gitattributes`)
-    mv(`_package.json`, `package.json`)
     mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
+    mv(`_package.json`, `package.json`)
+    mv(`gitattributes`, `.gitattributes`)
+    mv(`gitignore`, `.gitignore`)
+    mv(`prettierignore`, `.prettierignore`)
     this.writeDestination(
       `license`,
       licenses.MIT.licenseText
@@ -176,40 +151,44 @@ class JsGenerator extends Generator {
   }
 
   gitInit() {
-    if (this.options.git) {
-      this.spawnSync(`git`, [`init`])
+    if (!this.options.git) {
+      return
+    }
+
+    this.spawnSync(`git`, [`init`])
+    if (this.options.jj) {
+      this.spawnSync(`jj`, [`git`, `init`, `--colocate`])
     }
   }
 
   async install() {
-    await this.spawn(
-      `pnpm`,
-      [
-        `install`,
-        `--save-dev`,
-        `@fast-check/vitest`,
-        `@vitest/coverage-v8`,
-        `eslint`,
-        ...(this.answers.environmentSupport.isBrowserSupported
-          ? [`jsdom`]
-          : []),
-        `prettier`,
-        `tomer`,
-        `typescript`,
-        `vitest`,
-      ].filter(Boolean),
-    )
+    const packageNames = [
+      `@fast-check/vitest`,
+      `@tomer/eslint-config`,
+      `@tomer/prettier-config`,
+      `@vitest/coverage-v8`,
+      `eslint`,
+      `jest-extended`,
+      `prettier`,
+      `publint`,
+      `tsdown`,
+      `typescript`,
+      `vitest`,
+      ...(this.answers.supportsBrowser
+        ? [`jsdom`, `@rollup/plugin-terser`, `rollup-plugin-tree-shakeable`]
+        : []),
+    ].sort()
+    await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames])
+    await this.spawn(`pnpm`, [`approve-builds`])
   }
 
   async end() {
-    await this.spawn(`pnpm`, [`format`])
     await this.spawn(`pnpm`, [`lint`])
-
-    if (this.answers.includesTypes) {
-      await this.spawn(`pnpm`, [`typecheck`])
-    }
-
-    await this.spawn(`pnpm`, [`test`, `--`, `--no-watch`])
+    await this.spawn(`pnpm`, [`format`])
+    await this.spawn(`pnpm`, [`typecheck`])
+    await this.spawn(`pnpm`, [`build`])
+    await this.spawn(`pnpm`, [`test`, `--watch=false`])
+    await this.spawn(`pnpm`, [`bench`, `--watch=false`])
   }
 }
 

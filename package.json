@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "@tomer/generator-js",
   "version": "2.5.0",
   "author": {
@@ -16,37 +15,39 @@
   "bugs": {
     "url": "https://github.com/TomerAberbach/generator-js/issues"
   },
+  "funding": {
+    "url": "https://github.com/sponsors/TomerAberbach"
+  },
   "license": "MIT",
   "files": [
     "app"
   ],
+  "type": "module",
   "engines": {
-    "node": ">= 18"
+    "node": ">= 22"
   },
   "main": "app/index.js",
   "scripts": {
-    "format": "tomer format",
-    "lint": "tomer lint"
+    "format": "prettier --cache --write .",
+    "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix ."
   },
-  "prettier": "tomer/prettier",
-  "tomer": {
-    "src": "app"
-  },
+  "prettier": "@tomer/prettier-config",
   "dependencies": {
     "@sindresorhus/slugify": "2.2.1",
     "camelcase": "8.0.0",
-    "got": "14.4.4",
+    "github-username": "^9.0.0",
     "indefinite": "^2.5.1",
     "is-scoped": "3.0.0",
-    "normalize-url": "8.0.1",
-    "spdx-license-list": "6.9.0",
+    "normalize-url": "8.0.2",
+    "spdx-license-list": "6.10.0",
     "superb": "5.0.0",
-    "typescript": "^5.6.3",
-    "yeoman-generator": "7.3.3"
+    "yeoman-generator": "7.5.1"
   },
   "devDependencies": {
-    "eslint": "^9.14.0",
-    "prettier": "^3.3.3",
-    "tomer": "^6.0.1"
+    "@tomer/eslint-config": "^4.1.0",
+    "@tomer/prettier-config": "^4.0.0",
+    "eslint": "^9.32.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
   }
 }

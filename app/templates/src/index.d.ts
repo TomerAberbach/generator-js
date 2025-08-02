@@ -1,1 +1,1 @@
-export default function <%= camelCasedModuleName %>(): string
+export default function <%= camelCasedModuleName %>(string?: string): string

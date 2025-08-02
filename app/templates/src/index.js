@@ -1,3 +1,3 @@
-const <%= camelCasedModuleName %> = () => `Hello World!`
+const <%= camelCasedModuleName %> = (string = `World`) => `Hello ${string}!`
 
 export default <%= camelCasedModuleName %>
