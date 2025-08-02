@@ -6,6 +6,9 @@
   <a href="https://npmjs.org/package/@tomer/generator-js">
     <img src="https://badgen.net/npm/v/@tomer/generator-js" alt="version" />
   </a>
+  <a href="https://github.com/TomerAberbach/generator-js/actions">
+    <img src="https://github.com/TomerAberbach/generator-js/workflows/CI/badge.svg" alt="CI" />
+  </a>
   <a href="https://github.com/sponsors/TomerAberbach">
     <img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor" />
   </a>
