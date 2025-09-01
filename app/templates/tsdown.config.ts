@@ -7,6 +7,7 @@ export default defineConfig([
     entry: `src/index.<%= typeSupport %>`,
     platform: `neutral`,
     sourcemap: `inline`,
+    dts: false,
     publint: true,<% if (supportsBrowser) { %>
     plugins: [
       terser({
