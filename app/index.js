@@ -124,6 +124,7 @@ class JsGenerator extends Generator {
         `${this.templatePath()}/eslint.config.js`,
         `${this.templatePath()}/gitattributes`,
         `${this.templatePath()}/gitignore`,
+        `${this.templatePath()}/pnpm-workspace.yaml`,
         `${this.templatePath()}/prettierignore`,
         `${this.templatePath()}/tsdown.config.ts`,
         `${this.templatePath()}/vitest.config.ts`,
