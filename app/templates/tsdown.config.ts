@@ -5,7 +5,7 @@ import terser from '@rollup/plugin-terser'<% } %>
 export default defineConfig([
   {
     entry: `src/index.<%= typeSupport %>`,
-    platform: `neutral`,
+    platform: `<% if (supportsBrowser) { %>neutral<% } else { %>node<% } %>`,
     sourcemap: `inline`,
     dts: false,
     publint: true,<% if (supportsBrowser) { %>

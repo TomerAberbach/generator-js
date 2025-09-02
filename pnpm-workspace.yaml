@@ -1,3 +1,4 @@
-shellEmulator: true
 onlyBuiltDependencies:
   - unrs-resolver
+
+shellEmulator: true
