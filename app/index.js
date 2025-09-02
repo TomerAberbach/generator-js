@@ -177,7 +177,7 @@ class JsGenerator extends Generator {
       `vitest`,
       ...(this.answers.supportsBrowser
         ? [`jsdom`, `@rollup/plugin-terser`, `rollup-plugin-tree-shakeable`]
-        : []),
+        : [`@types/node`]),
     ].sort()
     await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames])
     await this.spawn(`pnpm`, [`approve-builds`])
