@@ -1,11 +1,11 @@
 import slugify from '@sindresorhus/slugify'
 import camelCase from 'camelcase'
+import githubUsername from 'github-username'
 import indefinite from 'indefinite'
 import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
 import licenses from 'spdx-license-list/full.js'
 import { randomSuperbWord } from 'superb'
-import githubUsername from 'github-username'
 import Generator from 'yeoman-generator'
 
 class JsGenerator extends Generator {
