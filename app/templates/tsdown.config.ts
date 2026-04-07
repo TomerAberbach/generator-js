@@ -9,8 +9,18 @@ export default defineConfig([
     sourcemap: `inline`,
     dts: false,
     publint: true,<% if (supportsBrowser) { %>
+    minify: false,
     plugins: [
       terser({
+        // Assume modern JavaScript
+        ecma: 2020,
+        module: true,
+        toplevel: true,
+        // Run multiple times
+        compress: {
+          passes: 3,
+        },
+        // Mangle underscore prefixed properties
         mangle: {
           properties: {
             regex: `^_[^_]+`,
