@@ -53,7 +53,7 @@ class JsGenerator extends Generator {
         message: `Does your module support the browser?`,
       },
       {
-        type: `list`,
+        type: `select`,
         name: `typeSupport`,
         message: `Does your module use TypeScript?`,
         choices: [
@@ -179,17 +179,19 @@ class JsGenerator extends Generator {
         ? [`jsdom`, `@rollup/plugin-terser`, `rollup-plugin-tree-shakeable`]
         : [`@types/node`]),
     ].sort()
-    await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames])
-    await this.spawn(`pnpm`, [`approve-builds`])
+    await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames], {
+      stdio: `inherit`,
+    })
+    await this.spawn(`pnpm`, [`approve-builds`, `--all`], { stdio: `inherit` })
   }
 
   async end() {
-    await this.spawn(`pnpm`, [`lint`])
-    await this.spawn(`pnpm`, [`format`])
-    await this.spawn(`pnpm`, [`typecheck`])
-    await this.spawn(`pnpm`, [`build`])
-    await this.spawn(`pnpm`, [`test`, `--watch=false`])
-    await this.spawn(`pnpm`, [`bench`, `--watch=false`])
+    await this.spawn(`pnpm`, [`lint`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`format`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`typecheck`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`build`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`test`, `--watch=false`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`bench`, `--watch=false`], { stdio: `inherit` })
   }
 }
 
