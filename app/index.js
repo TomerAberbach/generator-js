@@ -115,11 +115,13 @@ class JsGenerator extends Generator {
 
     this.fs.copyTpl(
       [
+        `${this.templatePath()}/claude`,
         `${this.templatePath()}/github`,
         `${this.templatePath()}/src/**/${
           typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,bench.ts,test.ts}`
         }`,
         `${this.templatePath()}/types`,
+        `${this.templatePath()}/_CLAUDE.md`,
         `${this.templatePath()}/_package.json`,
         `${this.templatePath()}/eslint.config.js`,
         `${this.templatePath()}/gitattributes`,
@@ -138,7 +140,10 @@ class JsGenerator extends Generator {
 
     const mv = (from, to) =>
       this.fs.move(this.destinationPath(from), this.destinationPath(to))
+    mv(`claude/hooks/lint-format.sh`, `.claude/hooks/lint-format.sh`)
+    mv(`claude/settings.json`, `.claude/settings.json`)
     mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
+    mv(`_CLAUDE.md`, `CLAUDE.md`)
     mv(`_package.json`, `package.json`)
     mv(`gitattributes`, `.gitattributes`)
     mv(`gitignore`, `.gitignore`)
@@ -182,7 +187,7 @@ class JsGenerator extends Generator {
     await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames], {
       stdio: `inherit`,
     })
-    await this.spawn(`pnpm`, [`approve-builds`, `--all`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`approve-builds`], { stdio: `inherit` })
   }
 
   async end() {
