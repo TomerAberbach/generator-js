@@ -6,8 +6,8 @@
   <a href="https://npmjs.org/package/<%= moduleName %>">
     <img src="https://badgen.net/npm/v/<%= moduleName %>" alt="version" />
   </a>
-  <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions">
-    <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/workflows/CI/badge.svg" alt="CI" />
+  <a href="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions/workflows/ci.yml">
+    <img src="https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" />
   </a>
   <a href="https://unpkg.com/<%= moduleName %>/dist/index.js">
     <img src="https://deno.bundlejs.com/?q=<%= moduleName %>&badge" alt="gzip size" />
