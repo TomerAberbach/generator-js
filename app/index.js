@@ -48,9 +48,22 @@ class JsGenerator extends Generator {
         default: `${indefinite(randomSuperbWord(), { capitalize: true })} module.`,
       },
       {
+        type: `select`,
+        name: `packageType`,
+        message: `What does your module provide?`,
+        choices: [
+          { name: `A library`, value: `lib` },
+          { name: `A CLI`, value: `cli` },
+          { name: `A library and a CLI`, value: `both` },
+        ],
+        default: `lib`,
+      },
+      {
         type: `confirm`,
         name: `supportsBrowser`,
-        message: `Does your module support the browser?`,
+        message: `Does your library support the browser?`,
+        when: answers => answers.packageType !== `cli`,
+        default: false,
       },
       {
         type: `select`,
@@ -98,15 +111,24 @@ class JsGenerator extends Generator {
   }
 
   writing() {
-    const { moduleName, supportsBrowser, typeSupport, ...otherAnswers } =
-      this.answers
+    const {
+      moduleName,
+      packageType,
+      supportsBrowser = false,
+      typeSupport,
+      ...otherAnswers
+    } = this.answers
     const unscopedModuleName = isScoped(moduleName)
       ? moduleName.split(`/`)[1]
       : moduleName
 
+    const hasLib = packageType !== `cli`
+    const hasCli = packageType !== `lib`
     const options = {
       ...otherAnswers,
       moduleName,
+      hasLib,
+      hasCli,
       supportsBrowser,
       typeSupport,
       unscopedModuleName,
@@ -117,7 +139,7 @@ class JsGenerator extends Generator {
       [
         `${this.templatePath()}/claude`,
         `${this.templatePath()}/github`,
-        `${this.templatePath()}/src/**/${
+        `${this.templatePath()}/src${hasCli ? `/{,cli/}` : `/`}${
           typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,test.ts}`
         }`,
         `${this.templatePath()}/_CLAUDE.md`,
@@ -189,6 +211,13 @@ class JsGenerator extends Generator {
     await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames], {
       stdio: `inherit`,
     })
+    if (this.answers.packageType !== `lib`) {
+      await this.spawn(
+        `pnpm`,
+        [`install`, `--save-prod`, `@optique/core`, `@optique/run`],
+        { stdio: `inherit` },
+      )
+    }
   }
 
   async end() {

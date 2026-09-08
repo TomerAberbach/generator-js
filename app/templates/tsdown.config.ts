@@ -1,8 +1,8 @@
-import { defineConfig } from 'tsdown/config'<% if (supportsBrowser) { %>
+import { defineConfig } from 'tsdown/config'<% if (hasLib && supportsBrowser) { %>
 import treeShakeable from 'rollup-plugin-tree-shakeable'
 import terser from '@rollup/plugin-terser'<% } %>
 
-export default defineConfig([
+export default defineConfig([<% if (hasLib) { %>
   {
     entry: `src/index.<%= typeSupport %>`,
     platform: `<% if (supportsBrowser) { %>neutral<% } else { %>node<% } %>`,
@@ -34,5 +34,14 @@ export default defineConfig([
   {
     entry: `src/index.<% if (typeSupport === 'ts') { %>ts<% } else { %>d.ts<% } %>`,
     dts: { emitDtsOnly: true },
-  },
+  },<% } %><% if (hasCli) { %>
+  {
+    entry: `src/cli/index.<%= typeSupport %>`,
+    outDir: `dist/cli`,
+    platform: `node`,
+    dts: false,
+    minify: false,<% if (!hasLib) { %>
+    publint: true,<% } %>
+    banner: { js: `#!/usr/bin/env node` },
+  },<% } %>
 ])

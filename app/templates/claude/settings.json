@@ -8,7 +8,8 @@
       "Bash(pnpm test *)",
       "Bash(pnpm coverage *)",
       "Bash(pnpm build *)",
-      "Bash(pnpm check *)"
+      "Bash(pnpm check *)"<% if (hasCli) { %>,
+      "Bash(node src/cli/index.<%= typeSupport %> *)"<% } %>
     ]
   },
   "hooks": {
