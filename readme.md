@@ -18,6 +18,12 @@
   A Yeoman generator for scaffolding my JavaScript modules.
 </div>
 
+<div align="center">
+  <a href="#features">Features</a> •
+  <a href="#install">Install</a> •
+  <a href="#usage">Usage</a>
+</div>
+
 ## Features
 
 - **Unoriginal:** heavily inspired by
@@ -45,7 +51,7 @@ $ yo @tomer/js
 Stars are always welcome!
 
 For bugs and feature requests,
-[please create an issue](https://github.com/TomerAberbach/generator-js/issues/new).
+[create an issue](https://github.com/TomerAberbach/generator-js/issues/new).
 
 ## License
 

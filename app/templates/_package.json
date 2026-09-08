@@ -38,10 +38,11 @@
     "lint:base": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix",
     "lint": "pnpm lint:base .",
     "typecheck": "tsc --noEmit",
+    "knip": "knip",
     "test": "vitest",
     "coverage": "vitest --coverage",
-    "bench": "vitest bench",
     "build": "tsdown",
+    "check": "run-s -c build typecheck \"lint --no-fix\" \"format --no-write --check\" knip \"test --run\"",
     "prepublishOnly": "pnpm build"
   },
   "prettier": "@tomer/prettier-config"

@@ -8,5 +8,5 @@ test(`<%= camelCasedModuleName %> works`, () => {
 })
 
 test.prop([fc.string()])(`<%= camelCasedModuleName %> always works`, string => {
-  expect(<%= camelCasedModuleName %>(string)).toInclude(string)
+  expect(<%= camelCasedModuleName %>(string)).toContain(string)
 })

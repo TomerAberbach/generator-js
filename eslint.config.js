@@ -1,3 +1,3 @@
-import eslintConfig from '@tomer/eslint-config'
+import config from '@tomer/eslint-config'
 
-export default [{ ignores: [`app/templates`] }, ...eslintConfig]
+export default [...config, { ignores: [`app/templates`] }]

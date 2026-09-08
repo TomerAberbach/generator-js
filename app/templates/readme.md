@@ -24,6 +24,12 @@
   <%= moduleDescription %>
 </div>
 
+<div align="center">
+  <a href="#features">Features</a> •
+  <a href="#install">Install</a> •
+  <a href="#usage">Usage</a>
+</div>
+
 ## Features
 
 - **Wow:** so amazing
@@ -49,7 +55,7 @@ console.log(<%= camelCasedModuleName %>())
 
 Stars are always welcome!
 
-For bugs and feature requests, [please create an issue](https://github.com/<%=
+For bugs and feature requests, [create an issue](https://github.com/<%=
 githubUsername %>/<%= unscopedModuleName %>/issues/new).
 
 ## License

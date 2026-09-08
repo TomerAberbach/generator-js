@@ -28,8 +28,12 @@
   },
   "main": "app/index.js",
   "scripts": {
-    "format": "prettier --cache --write .",
-    "lint": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix ."
+    "format:base": "prettier --cache --write",
+    "format": "pnpm format:base .",
+    "lint:base": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix",
+    "lint": "pnpm lint:base .",
+    "knip": "knip",
+    "check": "run-s -c \"lint --no-fix\" \"format --no-write --check\" knip"
   },
   "prettier": "@tomer/prettier-config",
   "dependencies": {
@@ -47,6 +51,8 @@
     "@tomer/eslint-config": "^5.0.0",
     "@tomer/prettier-config": "^4.0.1",
     "eslint": "^10.3.0",
+    "knip": "^6.34.0",
+    "npm-run-all2": "^9.0.3",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3"
   }

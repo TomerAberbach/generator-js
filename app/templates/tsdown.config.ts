@@ -7,6 +7,7 @@ export default defineConfig([
     entry: `src/index.<%= typeSupport %>`,
     platform: `<% if (supportsBrowser) { %>neutral<% } else { %>node<% } %>`,
     sourcemap: `inline`,
+    fixedExtension: false,
     dts: false,
     publint: true,<% if (supportsBrowser) { %>
     minify: false,

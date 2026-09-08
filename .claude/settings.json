@@ -3,11 +3,7 @@
     "allow": [
       "Bash(pnpm format *)",
       "Bash(pnpm lint *)",
-      "Bash(pnpm typecheck *)",
       "Bash(pnpm knip *)",
-      "Bash(pnpm test *)",
-      "Bash(pnpm coverage *)",
-      "Bash(pnpm build *)",
       "Bash(pnpm check *)"
     ]
   },

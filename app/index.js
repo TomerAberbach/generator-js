@@ -118,19 +118,18 @@ class JsGenerator extends Generator {
         `${this.templatePath()}/claude`,
         `${this.templatePath()}/github`,
         `${this.templatePath()}/src/**/${
-          typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,bench.ts,test.ts}`
+          typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,test.ts}`
         }`,
-        `${this.templatePath()}/types`,
         `${this.templatePath()}/_CLAUDE.md`,
         `${this.templatePath()}/_package.json`,
         `${this.templatePath()}/eslint.config.js`,
         `${this.templatePath()}/gitattributes`,
         `${this.templatePath()}/gitignore`,
+        `${this.templatePath()}/knip.json`,
         `${this.templatePath()}/pnpm-workspace.yaml`,
         `${this.templatePath()}/prettierignore`,
         `${this.templatePath()}/tsdown.config.ts`,
         `${this.templatePath()}/vitest.config.ts`,
-        `${this.templatePath()}/vitest.setup.ts`,
         `${this.templatePath()}/readme.md`,
         `${this.templatePath()}/tsconfig.json`,
       ].filter(Boolean),
@@ -143,6 +142,7 @@ class JsGenerator extends Generator {
     mv(`claude/hooks/lint-format.sh`, `.claude/hooks/lint-format.sh`)
     mv(`claude/settings.json`, `.claude/settings.json`)
     mv(`github/workflows/ci.yml`, `.github/workflows/ci.yml`)
+    mv(`github/workflows/release.yml`, `.github/workflows/release.yml`)
     mv(`_CLAUDE.md`, `CLAUDE.md`)
     mv(`_package.json`, `package.json`)
     mv(`gitattributes`, `.gitattributes`)
@@ -174,11 +174,13 @@ class JsGenerator extends Generator {
       `@tomer/prettier-config`,
       `@vitest/coverage-v8`,
       `eslint`,
-      `jest-extended`,
+      `knip`,
+      `npm-run-all2`,
       `prettier`,
       `publint`,
       `tsdown`,
-      `typescript`,
+      // TypeScript 7 is unsupported by typescript-eslint
+      `typescript@6`,
       `vitest`,
       ...(this.answers.supportsBrowser
         ? [`jsdom`, `@rollup/plugin-terser`, `rollup-plugin-tree-shakeable`]
@@ -187,16 +189,12 @@ class JsGenerator extends Generator {
     await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames], {
       stdio: `inherit`,
     })
-    await this.spawn(`pnpm`, [`approve-builds`], { stdio: `inherit` })
   }
 
   async end() {
     await this.spawn(`pnpm`, [`lint`], { stdio: `inherit` })
     await this.spawn(`pnpm`, [`format`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`typecheck`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`build`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`test`, `--watch=false`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`bench`, `--watch=false`], { stdio: `inherit` })
+    await this.spawn(`pnpm`, [`check`], { stdio: `inherit` })
   }
 }
 
