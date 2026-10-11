@@ -11,7 +11,10 @@
     "cli"
   <% } %>],
   "homepage": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>",
-  "repository": "<%= githubUsername %>/<%= unscopedModuleName %>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>.git"
+  },
   "bugs": {
     "url": "https://github.com/<%= githubUsername %>/<%= unscopedModuleName %>/issues"
   },
@@ -47,7 +50,7 @@
     "test": "vitest",
     "coverage": "vitest --coverage",
     "build": "tsdown",
-    "check": "run-s -c build typecheck \"lint --no-fix\" \"format --no-write --check\" knip \"test --run\"",
+    "check": "npm-run-all -c -l -s build -p typecheck \"lint --no-fix\" \"format --no-write --check\" knip \"test --run\"",
     "prepublishOnly": "pnpm build"
   },
   "prettier": "@tomer/prettier-config"

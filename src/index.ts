@@ -4,13 +4,33 @@ import githubUsername from 'github-username'
 import indefinite from 'indefinite'
 import isScoped from 'is-scoped'
 import normalizeUrl from 'normalize-url'
-import licenses from 'spdx-license-list/full.js'
+import mitLicense from 'spdx-license-list/licenses/MIT.json' with { type: 'json' }
 import { randomSuperbWord } from 'superb'
 import Generator from 'yeoman-generator'
+import type { BaseOptions } from 'yeoman-generator'
 
-class JsGenerator extends Generator {
-  constructor(...args) {
-    super(...args)
+type Options = BaseOptions & { git: boolean; jj: boolean }
+
+type Answers = {
+  moduleName: string
+  moduleDescription: string
+  packageType: `lib` | `cli` | `both`
+  supportsBrowser?: boolean
+  typeSupport: `ts` | `js`
+  name: string
+  email: string
+  website: string
+  githubUsername: string
+}
+
+class JsGenerator extends Generator<Record<string, unknown>, Options> {
+  private gitName?: string
+  private gitEmail?: string
+  private githubUsername?: string
+  private answers!: Answers
+
+  public constructor(args: string[], options: Options) {
+    super(args, options)
 
     this.option(`git`, {
       type: Boolean,
@@ -24,25 +44,30 @@ class JsGenerator extends Generator {
     })
   }
 
-  async initializing() {
+  public async initializing(): Promise<void> {
     try {
       ;[this.gitName, this.gitEmail] = await Promise.all([
         this.git.name(),
         this.git.email(),
       ])
-      this.githubUsername = await githubUsername(this.gitEmail)
+      if (this.gitEmail) {
+        this.githubUsername = await githubUsername(this.gitEmail)
+      }
     } catch {}
   }
 
-  async prompting() {
-    this.answers = await this.prompt([
+  public async prompting(): Promise<void> {
+    this.answers = await this.prompt<Answers>([
       {
+        type: `input`,
         name: `moduleName`,
         message: `What is your module's name?`,
         default: () => slugify(this.determineAppname()),
-        filter: answer => (isScoped(answer) ? answer : slugify(answer)),
+        filter: (answer: string) =>
+          isScoped(answer) ? answer : slugify(answer),
       },
       {
+        type: `input`,
         name: `moduleDescription`,
         message: `What is your module's description?`,
         default: `${indefinite(randomSuperbWord(), { capitalize: true })} module.`,
@@ -79,30 +104,34 @@ class JsGenerator extends Generator {
             value: `js`,
           },
         ],
-        default: `TypeScript only`,
+        default: `ts`,
       },
       {
+        type: `input`,
         name: `name`,
         message: `What is your name?`,
         default: this.gitName,
         store: true,
       },
       {
+        type: `input`,
         name: `email`,
         message: `What is your email address?`,
         default: this.gitEmail,
         store: true,
       },
       {
+        type: `input`,
         name: `website`,
         message: `What is your website's URL?`,
-        filter: answer => normalizeUrl(answer),
+        filter: (answer: string) => normalizeUrl(answer),
         store: true,
       },
       {
+        type: `input`,
         name: `githubUsername`,
         message: `What is your GitHub username?`,
-        validate: answer =>
+        validate: (answer: string) =>
           answer.length > 0 || `You must provide a GitHub username`,
         default: this.githubUsername,
         store: true,
@@ -110,7 +139,47 @@ class JsGenerator extends Generator {
     ])
   }
 
-  writing() {
+  public writing(): void {
+    const options = this._templateOptions()
+    this._copyTemplates(options)
+    this._renameTemplateFiles()
+    this._writeLicense()
+  }
+
+  public gitInit(): void {
+    if (!this.options.git) {
+      return
+    }
+
+    this.spawnSync(`git`, [`init`])
+    if (this.options.jj) {
+      this.spawnSync(`jj`, [`git`, `init`, `--colocate`])
+    }
+  }
+
+  public async install(): Promise<void> {
+    await this._pnpm(
+      `install`,
+      `--save-dev`,
+      ...devDependencies(this.answers.supportsBrowser),
+    )
+    if (this.answers.packageType !== `lib`) {
+      await this._pnpm(
+        `install`,
+        `--save-prod`,
+        `@optique/core@^1`,
+        `@optique/run@^1`,
+      )
+    }
+  }
+
+  public async end(): Promise<void> {
+    await this._pnpm(`lint`)
+    await this._pnpm(`format`)
+    await this._pnpm(`check`)
+  }
+
+  private _templateOptions() {
     const {
       moduleName,
       packageType,
@@ -118,29 +187,27 @@ class JsGenerator extends Generator {
       typeSupport,
       ...otherAnswers
     } = this.answers
-    const unscopedModuleName = isScoped(moduleName)
-      ? moduleName.split(`/`)[1]
-      : moduleName
+    const unscopedModuleName = moduleName.slice(moduleName.indexOf(`/`) + 1)
 
-    const hasLib = packageType !== `cli`
-    const hasCli = packageType !== `lib`
-    const options = {
+    return {
       ...otherAnswers,
       moduleName,
-      hasLib,
-      hasCli,
+      hasLib: packageType !== `cli`,
+      hasCli: packageType !== `lib`,
       supportsBrowser,
       typeSupport,
       unscopedModuleName,
       camelCasedModuleName: camelCase(unscopedModuleName),
     }
+  }
 
+  private _copyTemplates(options: ReturnType<JsGenerator[`_templateOptions`]>) {
     this.fs.copyTpl(
       [
         `${this.templatePath()}/claude`,
         `${this.templatePath()}/github`,
-        `${this.templatePath()}/src${hasCli ? `/{,cli/}` : `/`}${
-          typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,test.ts}`
+        `${this.templatePath()}/src${options.hasCli ? `/{,cli/}` : `/`}${
+          options.typeSupport === `ts` ? `!(*.d).ts` : `*.{js,d.ts,test.ts}`
         }`,
         `${this.templatePath()}/_CLAUDE.md`,
         `${this.templatePath()}/_package.json`,
@@ -158,8 +225,10 @@ class JsGenerator extends Generator {
       this.destinationPath(),
       options,
     )
+  }
 
-    const mv = (from, to) =>
+  private _renameTemplateFiles() {
+    const mv = (from: string, to: string) =>
       this.fs.move(this.destinationPath(from), this.destinationPath(to))
     mv(`claude/hooks/lint-format.sh`, `.claude/hooks/lint-format.sh`)
     mv(`claude/settings.json`, `.claude/settings.json`)
@@ -170,61 +239,44 @@ class JsGenerator extends Generator {
     mv(`gitattributes`, `.gitattributes`)
     mv(`gitignore`, `.gitignore`)
     mv(`prettierignore`, `.prettierignore`)
+  }
+
+  private _writeLicense() {
     this.writeDestination(
       `license`,
-      licenses.MIT.licenseText
+      mitLicense.licenseText
         .replace(`<year>`, String(new Date().getFullYear()))
         .replace(`<copyright holders>`, this.answers.name),
     )
   }
 
-  gitInit() {
-    if (!this.options.git) {
-      return
-    }
-
-    this.spawnSync(`git`, [`init`])
-    if (this.options.jj) {
-      this.spawnSync(`jj`, [`git`, `init`, `--colocate`])
-    }
-  }
-
-  async install() {
-    const packageNames = [
-      `@fast-check/vitest`,
-      `@tomer/eslint-config`,
-      `@tomer/prettier-config`,
-      `@vitest/coverage-v8`,
-      `eslint`,
-      `knip`,
-      `npm-run-all2`,
-      `prettier`,
-      `publint`,
-      `tsdown`,
-      // TypeScript 7 is unsupported by typescript-eslint
-      `typescript@6`,
-      `vitest`,
-      ...(this.answers.supportsBrowser
-        ? [`jsdom`, `@rollup/plugin-terser`, `rollup-plugin-tree-shakeable`]
-        : [`@types/node`]),
-    ].sort()
-    await this.spawn(`pnpm`, [`install`, `--save-dev`, ...packageNames], {
-      stdio: `inherit`,
-    })
-    if (this.answers.packageType !== `lib`) {
-      await this.spawn(
-        `pnpm`,
-        [`install`, `--save-prod`, `@optique/core`, `@optique/run`],
-        { stdio: `inherit` },
-      )
-    }
-  }
-
-  async end() {
-    await this.spawn(`pnpm`, [`lint`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`format`], { stdio: `inherit` })
-    await this.spawn(`pnpm`, [`check`], { stdio: `inherit` })
+  private async _pnpm(...args: string[]) {
+    await this.spawn(`pnpm`, args, { stdio: `inherit` })
   }
 }
+
+const devDependencies = (supportsBrowser = false) =>
+  [
+    `@fast-check/vitest@^0.5`,
+    `@tomer/eslint-config@^5`,
+    `@tomer/prettier-config@^4`,
+    `@vitest/coverage-v8@^5`,
+    `eslint@^10`,
+    `knip@^6`,
+    `npm-run-all2@^9`,
+    `prettier@^3`,
+    `publint@^0.3`,
+    `tsdown@^0.23`,
+    // TypeScript 7 is unsupported by typescript-eslint
+    `typescript@^6`,
+    `vitest@^5`,
+    ...(supportsBrowser
+      ? [
+          `jsdom@^30`,
+          `@rollup/plugin-terser@^1`,
+          `rollup-plugin-tree-shakeable@^2`,
+        ]
+      : [`@types/node@^26`]),
+  ].sort()
 
 export default JsGenerator

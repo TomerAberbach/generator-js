@@ -1,3 +1,5 @@
 allowBuilds:
   unrs-resolver: true
 shellEmulator: true
+overrides:
+  katex@<0.18.2: ^0.18.2
