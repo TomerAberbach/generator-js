@@ -55,8 +55,8 @@
     "yeoman-generator": "10.0.1"
   },
   "devDependencies": {
-    "@tomer/eslint-config": "^5.1.1",
-    "@tomer/prettier-config": "^4.0.1",
+    "@tomer/eslint-config": "^6.0.0",
+    "@tomer/prettier-config": "^5.0.0",
     "@types/indefinite": "^2.3.4",
     "@types/node": "^22.20.5",
     "@yeoman/adapter": "^5.1.0",

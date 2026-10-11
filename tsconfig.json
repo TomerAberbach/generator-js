@@ -24,5 +24,6 @@
     // Runtime
     "lib": ["esnext"]
   },
-  "include": ["src/*.ts", "tsdown.config.ts", "vitest.config.ts"]
+  "include": ["src/**/*", "tsdown.config.ts", "vitest.config.ts"],
+  "exclude": ["src/templates"]
 }

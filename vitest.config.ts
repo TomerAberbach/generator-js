@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     // `src/templates` contains the scaffolded module's own tests
     include: [`src/*.test.ts`],
-    globalSetup: [`src/global-setup.ts`],
+    globalSetup: [`src/testing/global-setup.ts`],
     // The tests import neither the generator nor its templates
     forceRerunTriggers: [
       ...configDefaults.forceRerunTriggers,

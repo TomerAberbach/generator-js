@@ -11,8 +11,11 @@ const env = createEnv({
   }),
   cwd: destination,
 })
-env.register(fileURLToPath(import.meta.resolve(`../generators/app/index.js`)), {
-  namespace: `js:app`,
-})
+env.register(
+  fileURLToPath(import.meta.resolve(`../../generators/app/index.js`)),
+  {
+    namespace: `js:app`,
+  },
+)
 // `localConfigOnly` stores answers in the destination, not `~/.yo-rc-global.json`
 await env.run([`js:app`, `--no-git`], { localConfigOnly: true })

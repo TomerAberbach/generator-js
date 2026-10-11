@@ -46,10 +46,12 @@ class JsGenerator extends Generator<Record<string, unknown>, Options> {
 
   public async initializing(): Promise<void> {
     try {
-      ;[this.gitName, this.gitEmail] = await Promise.all([
+      const [gitName, gitEmail] = await Promise.all([
         this.git.name(),
         this.git.email(),
       ])
+      this.gitName = gitName
+      this.gitEmail = gitEmail
       if (this.gitEmail) {
         this.githubUsername = await githubUsername(this.gitEmail)
       }
@@ -158,11 +160,7 @@ class JsGenerator extends Generator<Record<string, unknown>, Options> {
   }
 
   public async install(): Promise<void> {
-    await this._pnpm(
-      `install`,
-      `--save-dev`,
-      ...devDependencies(this.answers.supportsBrowser),
-    )
+    await this._pnpm(`install`, `--save-dev`, ...devDependencies(this.answers))
     if (this.answers.packageType !== `lib`) {
       await this._pnpm(
         `install`,
@@ -255,11 +253,14 @@ class JsGenerator extends Generator<Record<string, unknown>, Options> {
   }
 }
 
-const devDependencies = (supportsBrowser = false) =>
+const devDependencies = ({
+  packageType,
+  supportsBrowser = false,
+}: Pick<Answers, `packageType` | `supportsBrowser`>) =>
   [
     `@fast-check/vitest@^0.5`,
-    `@tomer/eslint-config@^5`,
-    `@tomer/prettier-config@^4`,
+    `@tomer/eslint-config@^6`,
+    `@tomer/prettier-config@^5`,
     `@vitest/coverage-v8@^5`,
     `eslint@^10`,
     `knip@^6`,
@@ -276,7 +277,8 @@ const devDependencies = (supportsBrowser = false) =>
           `@rollup/plugin-terser@^1`,
           `rollup-plugin-tree-shakeable@^2`,
         ]
-      : [`@types/node@^26`]),
+      : []),
+    ...(!supportsBrowser || packageType !== `lib` ? [`@types/node@^26`] : []),
   ].sort()
 
 export default JsGenerator

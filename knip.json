@@ -1,5 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": ["src/scaffold.ts"],
+  "entry": ["src/testing/scaffold.ts"],
   "ignore": ["src/templates/**"]
 }

@@ -28,7 +28,7 @@
   "type": "module",<% if (hasLib) { %>
   "sideEffects": false,<% } %>
   "engines": {
-    "node": ">= 22"
+    "node": "^22.16.0 || >=24"
   },<% if (hasCli) { %>
   "bin": {
     "<%= unscopedModuleName %>": "./dist/cli/index.mjs"

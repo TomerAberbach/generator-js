@@ -9,8 +9,9 @@ generator-js
 ├── src/
 │   ├── index.ts                  # The generator: prompts, template copying, and post-install checks
 │   ├── index.test.ts             # Scaffolds a module per answer configuration and runs its `pnpm check`
-│   ├── scaffold.ts               # Runs the built generator with answers from the command line
-│   ├── global-setup.ts           # Rebuilds generators/app/ before every test run and watch rerun
+│   ├── testing/
+│   │   ├── scaffold.ts           # Runs the built generator with answers from the command line
+│   │   └── global-setup.ts       # Rebuilds generators/app/ before every test run and watch rerun
 │   └── templates/                # EJS templates copied into the scaffolded module
 │       ├── _CLAUDE.md            # Renamed to CLAUDE.md
 │       ├── _package.json         # Renamed to package.json
