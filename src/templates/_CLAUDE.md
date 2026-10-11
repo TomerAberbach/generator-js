@@ -21,7 +21,7 @@
 ## Development
 
 ```sh
-# Everything CI runs, in CI's order. Run before handing work back
+# Everything CI runs. Run before handing work back
 pnpm check
 
 pnpm format
