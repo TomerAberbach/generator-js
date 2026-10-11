@@ -3,3 +3,6 @@ allowBuilds:
 shellEmulator: true
 overrides:
   katex@<0.18.2: ^0.18.2
+minimumReleaseAgeExclude:
+  - '@tomer/eslint-config@6.0.0'
+  - '@tomer/prettier-config@5.0.0'

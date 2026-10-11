@@ -3,7 +3,7 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { test } from 'vitest'
+import { expect, test } from 'vitest'
 
 // Each template condition depends on at most two answers, so these cover every
 // pair of answers instead of every combination
@@ -31,7 +31,9 @@ test.concurrent.for(configs)(
     }
 
     // The generator ends by running the scaffolded module's `pnpm check`
-    await scaffold(destination, answers, signal)
+    await expect(
+      scaffold(destination, answers, signal),
+    ).resolves.toBeUndefined()
 
     await rm(destination, { recursive: true, force: true })
   },
@@ -46,7 +48,7 @@ const scaffold = (
     const child = spawn(
       process.execPath,
       [
-        fileURLToPath(import.meta.resolve(`./scaffold.ts`)),
+        fileURLToPath(import.meta.resolve(`./testing/scaffold.ts`)),
         destination,
         JSON.stringify(answers),
       ],
