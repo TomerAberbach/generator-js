@@ -44,30 +44,30 @@
   },
   "prettier": "@tomer/prettier-config",
   "dependencies": {
-    "@sindresorhus/slugify": "3.0.1",
-    "camelcase": "9.0.0",
+    "@sindresorhus/slugify": "4.0.1",
+    "camelcase": "10.0.0",
     "github-username": "^9.0.0",
     "indefinite": "^2.5.2",
     "is-scoped": "3.0.0",
-    "normalize-url": "9.0.1",
+    "normalize-url": "10.0.0",
     "spdx-license-list": "6.12.0",
     "superb": "5.1.0",
-    "yeoman-generator": "10.0.1"
+    "yeoman-generator": "10.3.1"
   },
   "devDependencies": {
-    "@tomer/eslint-config": "^6.0.0",
+    "@tomer/eslint-config": "^7.0.0",
     "@tomer/prettier-config": "^5.0.0",
     "@types/indefinite": "^2.3.4",
-    "@types/node": "^22.20.5",
-    "@yeoman/adapter": "^5.1.0",
-    "eslint": "^10.12.0",
-    "knip": "^6.41.0",
-    "npm-run-all2": "^9.0.3",
-    "prettier": "^3.9.10",
+    "@types/node": "^22.20.7",
+    "@yeoman/adapter": "^5.2.0",
+    "eslint": "^10.15.0",
+    "knip": "^6.48.0",
+    "npm-run-all2": "^9.1.0",
+    "prettier": "^3.10.1",
     "publint": "^0.3.25",
-    "tsdown": "^0.23.1",
+    "tsdown": "^0.23.7",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.3",
-    "yeoman-environment": "^8.2.0"
+    "vitest": "^5.1.2",
+    "yeoman-environment": "^8.9.0"
   }
 }

@@ -259,7 +259,7 @@ const devDependencies = ({
 }: Pick<Answers, `packageType` | `supportsBrowser`>) =>
   [
     `@fast-check/vitest@^0.5`,
-    `@tomer/eslint-config@^6`,
+    `@tomer/eslint-config@^7`,
     `@tomer/prettier-config@^5`,
     `@vitest/coverage-v8@^5`,
     `eslint@^10`,
@@ -278,7 +278,7 @@ const devDependencies = ({
           `rollup-plugin-tree-shakeable@^2`,
         ]
       : []),
-    ...(!supportsBrowser || packageType !== `lib` ? [`@types/node@^26`] : []),
+    ...(supportsBrowser && packageType === `lib` ? [] : [`@types/node@^26`]),
   ].sort()
 
 export default JsGenerator
