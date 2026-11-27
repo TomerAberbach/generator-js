@@ -33,7 +33,7 @@ export default defineConfig([<% if (hasLib) { %>
   },
   {
     entry: `src/index.<% if (typeSupport === 'ts') { %>ts<% } else { %>d.ts<% } %>`,
-    dts: { emitDtsOnly: true },
+    dts: { dtsOnly: true },
   },<% } %><% if (hasCli) { %>
   {
     entry: `src/cli/index.<%= typeSupport %>`,
