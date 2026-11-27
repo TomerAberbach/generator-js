@@ -15,7 +15,7 @@
 │       └── index.test.ts     # Tests that spawn the CLI<% } %>
 │
 └── .claude/
-    └── hooks/lint-format.sh  # Lints and formats each written file
+    └── hooks/lint-format.sh  # Lints and formats the changed files
 ```
 
 ## Development
