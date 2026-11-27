@@ -14,5 +14,8 @@ export default defineConfig({
     // Each test scaffolds a module, installs its dependencies, and runs its
     // checks
     testTimeout: 5 * 60_000,
+    // Each scaffolded module runs its checks in parallel, and more modules at
+    // once starve its CLI tests of CPU until they time out on a slow runner
+    maxConcurrency: 2,
   },
 })

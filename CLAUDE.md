@@ -33,7 +33,7 @@ generator-js
 pnpm check
 
 pnpm build    # Bundle the generator and copy the templates into generators/app/
-pnpm test     # Build, then scaffold modules and run their checks; takes about 30 seconds
+pnpm test     # Build, then scaffold modules and run their checks; takes about 75 seconds
 
 # Scaffold one configuration, named "<packageType>, <typeSupport>"
 pnpm test --run -t "cli, js"
