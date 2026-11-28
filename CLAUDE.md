@@ -23,7 +23,7 @@ generator-js
 ├── generators/app/              # Build output that Yeoman looks up: the bundled generator plus a copy of the templates
 │
 └── .claude/
-    └── hooks/lint-format.sh      # Lints and formats each written file
+    └── hooks/lint-format.sh      # Lints and formats the changed files
 ```
 
 ## Development

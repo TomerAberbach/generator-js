@@ -33,7 +33,7 @@
   "scripts": {
     "format:base": "prettier --cache --write",
     "format": "pnpm format:base .",
-    "lint:base": "eslint --cache --cache-location node_modules/.cache/eslint/ --fix",
+    "lint:base": "eslint --config eslint.config.js --cache --cache-location node_modules/.cache/eslint/ --fix",
     "lint": "pnpm lint:base .",
     "typecheck": "tsc --noEmit",
     "knip": "knip",
